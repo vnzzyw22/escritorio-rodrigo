@@ -1,0 +1,232 @@
+@import "tailwindcss";
+
+/* Tokens — ver LAW-FIRM-DESIGN-DIRECTION.md. Nenhuma cor ou fonte solta nos componentes. */
+:root {
+  --ink: #0e0e0d;
+  --graphite: #1d1e1c;
+  --graphite-line: #33342f;
+  --stone: #8e897f;
+  --ash: #5d594f;
+  --paper: #f1ede4;
+  --paper-deep: #e7e1d4;
+  --paper-line: #cfc8b8;
+  --white: #ffffff;
+  --bronze: #8f7248;
+  --bronze-light: #b79b6b;
+  /* Só para estado de erro em formulário. */
+  --alert: #e2a690;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-inout: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --margin: clamp(20px, 4.2vw, 76px);
+  --gutter: clamp(16px, 1.8vw, 32px);
+  --section-y: clamp(96px, 13vw, 200px);
+  --nav-h: 76px;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-graphite: var(--graphite);
+  --color-graphite-line: var(--graphite-line);
+  --color-stone: var(--stone);
+  --color-ash: var(--ash);
+  --color-paper: var(--paper);
+  --color-paper-deep: var(--paper-deep);
+  --color-paper-line: var(--paper-line);
+  --color-white: var(--white);
+  --color-bronze: var(--bronze);
+  --color-bronze-light: var(--bronze-light);
+  --color-alert: var(--alert);
+
+  --font-display: var(--font-caslon-display), "Libre Caslon Display", "Iowan Old Style", Georgia, serif;
+  --font-serif: var(--font-caslon-text), "Libre Caslon Text", "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-schibsted), system-ui, sans-serif;
+}
+
+/* ---------- Escala tipográfica ---------- */
+@utility text-display-xl {
+  font-size: clamp(3.4rem, 8.4vw, 6rem);
+  line-height: 0.98;
+  letter-spacing: -0.015em;
+}
+@utility text-display-l {
+  font-size: clamp(2.6rem, 6.6vw, 6rem);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+@utility text-display-m {
+  font-size: clamp(2.25rem, 4.6vw, 4.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.012em;
+}
+@utility text-title {
+  font-size: clamp(1.5rem, 3.2vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+@utility text-lead {
+  font-size: 1.25rem;
+  line-height: 1.55;
+}
+@utility label {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  line-height: 1.25;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ---------- Grid ---------- */
+@utility page-x {
+  padding-inline: var(--margin);
+}
+@utility grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+}
+@utility section-y {
+  padding-block: var(--section-y);
+}
+
+@layer base {
+  html {
+    background: var(--ink);
+    color-scheme: dark;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    scrollbar-width: thin;
+    scrollbar-color: var(--stone) var(--ink);
+  }
+  body {
+    background: var(--ink);
+    color: var(--ink);
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    font-kerning: normal;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  a,
+  button {
+    touch-action: manipulation;
+  }
+  button {
+    cursor: pointer;
+  }
+
+  /* Partes do navegador que também carregam o design. */
+  ::selection {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .dark-surface ::selection {
+    background: var(--paper);
+    color: var(--ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--focus, var(--bronze));
+    outline-offset: 4px;
+  }
+  .dark-surface {
+    --focus: var(--bronze-light);
+  }
+  input,
+  textarea {
+    caret-color: var(--bronze-light);
+    accent-color: var(--bronze);
+  }
+}
+
+/* Entrada do hero em CSS puro: aparece no primeiro paint, sem depender de JavaScript. */
+@keyframes rise {
+  from {
+    transform: translateY(108%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.rise {
+  animation: rise 1.2s var(--ease) both;
+  animation-delay: var(--d, 0s);
+}
+.fade-in {
+  animation: fade-in 1.4s var(--ease) both;
+  animation-delay: var(--d, 0s);
+}
+
+/* Link de texto: sublinhado que ganha contraste no hover/foco. */
+.link-u {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.32em;
+  text-decoration-color: color-mix(in srgb, currentColor 38%, transparent);
+  transition: text-decoration-color 0.35s var(--ease);
+}
+.link-u:hover,
+.link-u:focus-visible {
+  text-decoration-color: currentColor;
+}
+
+/* Amplia a área de toque de um link avulso sem mexer no layout. */
+.hit {
+  position: relative;
+}
+.hit::after {
+  content: "";
+  position: absolute;
+  inset: -0.8rem -0.35rem;
+}
+
+/* Placeholder de texto: legível, claramente provisório. */
+.pending {
+  color: var(--ash);
+}
+.dark-surface .pending {
+  color: var(--stone);
+}
+/* Bloco de papel dentro de uma seção escura: redefine o contexto (texto, foco, seleção). */
+.paper-surface {
+  --focus: var(--bronze);
+}
+.paper-surface .pending {
+  color: var(--ash);
+}
+.paper-surface ::selection {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .rise,
+  .fade-in {
+    animation: none;
+  }
+}
