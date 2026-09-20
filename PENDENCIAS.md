@@ -48,13 +48,18 @@ Hoje aparecem como `[X A CONFIRMAR]`. Editar em `src/lib/content.ts`.
 - [ ] Remover o `noindex` (`src/app/layout.tsx`) e o aviso "Proposta de conceito · não publicado" (`SITE.flags.conceptNotice`).
 - [ ] Validação do conteúdo pelo advogado à luz do Provimento 205/2021 da OAB (o texto integral não foi conferido). Isso inclui a faixa de avaliações do Google.
 - [ ] Favicon, imagem de compartilhamento (og:image) e `robots`/`sitemap`, depois da logo.
-- [ ] Repositório GitHub público: decidir se deve ser privado (contém as fotos e os dados do escritório).
+- [ ] **Repositório GitHub público** (`vnzzyw22/escritorio-rodrigo`): decidir se deve ser privado, porque contém as fotos provisórias, o retrato e os dados do escritório.
+- [ ] **Conectar a Vercel ao GitHub** para publicar sozinho a cada `git push`. A conexão automática falhou por falta de autorização do app da Vercel no GitHub: Vercel > projeto `escritorio-rodrigo` > Settings > Git > Connect. Enquanto isso, publicar com `npx vercel --prod --yes` na pasta do projeto.
 
 ## 6. Técnico
 
 - [ ] **Desempenho no celular lento:** no cenário mais pessimista (rede 4G lenta com CPU 4x mais fraca) o TBT é de ~1,1 s (LCP 1,7 s, CLS 0). Cerca de 0,65 s vêm das três famílias de fonte. Opções no §18 do documento de direção: reduzir para duas famílias ou aplicar `content-visibility` nas seções abaixo da dobra.
 - [ ] O build avisa que várias imagens estão abaixo da resolução mínima recomendada. É informativo; some quando chegarem as fotos reais.
 - [ ] O servidor de desenvolvimento trava arquivos de imagem no Windows: para trocar uma foto já servida, pare o `npm run dev`, troque o arquivo e suba de novo.
+
+## No ar
+
+Site em produção: https://escritorio-rodrigo.vercel.app (`noindex`). Os endereços `escritorio-rodrigo-vnzzyw.vercel.app` e o de cada deploy ficam atrás do login da Vercel. Projeto na conta `vnzzyw`, projeto `escritorio-rodrigo`. Código: https://github.com/vnzzyw22/escritorio-rodrigo.
 
 ## Feito
 
