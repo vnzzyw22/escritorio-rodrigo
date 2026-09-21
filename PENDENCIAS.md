@@ -7,35 +7,36 @@ Atualizado em 2026-09-21. Estado: estrutura completa e verificada; falta materia
 - [~] **Logo:** símbolo integrado ao hero em 2026-09-21 a partir de um JPEG (ver §Registro de decisões do documento de direção). Ainda vale um **vetor** (menu, rodapé e R grande do statement/rodapé). Pedido original: (vetorial: SVG ou PDF; ou PNG transparente com 2000 px ou mais) em `public/images/logo/rodrigo-alan-dias.svg` (ou `.png`). Sem ela, o menu e o rodapé usam um lockup tipográfico neutro.
 - [ ] **Símbolo R sozinho** em `public/images/logo/rodrigo-symbol.svg` (ou `.png`). Sem ele, o "R" grande do hero, do statement e do rodapé é um glifo provisório, sem círculo nem louro. Existe uma logo em PNG sem fundo (612×408) fora do projeto, pequena demais para o R grande.
 - [x] **"426 avaliações" no Google** confirmado pelo usuário em 2026-09-21. A faixa desliga em `flags.socialProof`.
-- [ ] **Citar avaliações de 5 estrelas no site:** pedido do usuário, NÃO implementado. Depoimento pode ser vedado pelo Provimento 205/2021 (o texto integral não foi conferido) e traz nome e possível detalhe de caso. Decidir depois da validação do advogado; precisa dos textos das avaliações.
+- [x] **Avaliações reais no site** (2026-09-21): 4 das 8 coladas pelo usuário, texto idêntico ao do Google, nome abreviado (primeiro nome e inicial). Ficaram de fora as que citam ganho de causa/êxito (resultado), a cortada com "…" e a incompleta. **O Rodrigo e a OAB/PR ainda precisam validar** (Provimento 205/2021; o texto integral não foi conferido). Aparecem em um carrossel (`reviews-carousel.tsx`: deslizar, setas e teclado, sem rotação automática). Para tirar: `SITE.reviews.featured = []` em `src/lib/site.ts`. Para trocar/adicionar: mesma lista.
 - [ ] **O Rodrigo aprovar o retrato.** É uma versão melhorada por IA de uma foto pequena, e a IA pode ter alterado traços do rosto. O notebook da foto mostra "DIAS ADVOGADOS", nome e marca que não são os do escritório (dá para recortar).
 
 ## 2. Informações que dependem do Rodrigo
 
 Hoje aparecem como `[X A CONFIRMAR]`. Editar em `src/lib/content.ts`.
 
-- [x] **Formação** preenchida em 2026-09-21 a partir do LinkedIn (UEL: Civil e Processo Civil; Damásio: Trabalho e Processo do Trabalho), sem ano. Falta confirmar se a graduação também foi na UEL.
+- [x] **Formação** preenchida em 2026-09-21 (LinkedIn): graduação em Direito e especialização em Civil e Processo Civil (UEL, confirmado pelo usuário) e especialização em Trabalho e Processo do Trabalho (Damásio), sem ano.
 - [ ] **Texto de apresentação:** rascunho escrito em 2026-09-21 (LinkedIn) e no ar como proposta; o Rodrigo precisa aprovar. Só usar o que ele aprovar. Base pública: "Advocacia Artesanal e Humanizada", "há mais de 8 anos" (bio do Instagram dele).
 - [ ] **Descrição do escritório:** rascunho no ar desde 2026-09-21 (a partir de dados públicos e do que o usuário informou); o Rodrigo precisa aprovar, e o título "Experiência construída ao longo do tempo." também.
 - [x] **Horário** confirmado pelo usuário em 2026-09-21: seg a sex 9h às 18h, sáb 9h às 13h.
 - [x] **Áreas:** o usuário mantém as cinco atuais (2026-09-21); o Rodrigo ainda deve validar.
 - [ ] (histórico) **Áreas de atuação reais.** As cinco atuais são EXEMPLOS (Trabalho, Cível e Contratos, Consumidor, Defesa Médica, Planejamento Patrimonial). Fontes públicas citam Cível, Trabalhista, Criminal, Previdenciária, juros abusivos em empréstimos; divergem entre si. Ao confirmar, trocar título, descrição e fotos.
-- [ ] **Artigos e publicações:** três títulos e datas informados pelo usuário em 2026-09-21 estão no ar (Trabalho ×2, Civil e Contratos ×1). **Não existe página de artigo por trás**, as linhas não são links. Falta escrever ou revisar os textos, criar as rotas e o Rodrigo validar (Provimento 205/2021).
+- [ ] **Validar as listas da "Primeira conversa"** (`FIRST_TALK` em `src/lib/content.ts`): documentos por assunto, rascunho genérico de 2026-09-21 que o Rodrigo deve conferir e ajustar. Vale o mesmo para as 5 áreas, que continuam sendo exemplos (as abas seguem `AREAS`).
+- [ ] **Artigos e publicações:** a seção "Perspectivas sobre o Direito" está DESLIGADA (`SITE.flags.articles = false`), porque os artigos não existem. Os 3 títulos e datas informados em 2026-09-21 continuam guardados em `INSIGHTS.posts`. Para religar: escrever os textos, criar as rotas, o Rodrigo validar (Provimento 205/2021) e ligar a chave.
 - [ ] **Aviso institucional do rodapé.** Há um texto padrão sóbrio; o advogado valida.
 - [ ] **Instagram** `@advocacia_rodrigoalandias`: achado em busca pública; confirmar antes de usar no site.
 - [ ] **E-mail de contato**, se quiser um além do WhatsApp.
 
 ## 3. Conferências rápidas
 
-- [ ] **OAB/PR 90.980** (informado pelo usuário; não foi possível conferir online). Conferir no Cadastro Nacional dos Advogados (cna.oab.org.br).
+- [x] **OAB/PR 90.980** confirmada pelo usuário em 2026-09-21.
 - [x] **Bairro:** mantido "Jardim Nova Paulista" por decisão do usuário (2026-09-21). (antes:) o texto do usuário dizia "Centro"; o site mantém "Jardim Nova Paulista" (brief original e diretórios).
 - [ ] **Link real do Google** (avaliações e mapa). Hoje o site usa links de busca genéricos em `src/lib/site.ts` (`links.map` e `links.reviews`).
 - [x] WhatsApp: (44) 99807-4406 confirmado pelo usuário como número de atendimento e WhatsApp.
 
 ## 4. Mídia
 
-- [x] **Vídeo do hero** entregue e processado (desktop 1,3 MB e celular vertical 0,45 MB, sem áudio, faststart, loop contínuo). Original em `assets-originais/hero/video-hero.mp4`. Falta: o Rodrigo aprovar o vídeo; o arquivo é 720p (pode ficar macio em telas grandes: pedir 1080p); o loop usa uma dissolve de 1 s e o recorte vertical foi tirado do mesmo vídeo (uma versão gravada na vertical seria melhor).
-- [ ] **Hero no celular:** o usuário vai gravar um vídeo vertical próprio (slot `heroVideoMobile`, 9:16, 1080×1920 ou 720×1280, sem áudio, ≤ 3 MB; ver §10 do documento de direção). Quando chegar, revisar o enquadramento do símbolo e do título sobre ele.
+- [x] **Hero (2026-09-21):** vídeo e foto novos do usuário (livro "Direito Civil Brasileiro" e balança), em 16:9 para o desktop (1280×720, 1,3 MB) e 9:16 para o celular (720×1280, 0,9 MB). Sem áudio, faststart e laço de 7 s com dissolve de 1 s para não haver corte seco. Originais em `assets-originais/hero/`; versões antigas em `assets-originais/hero/anteriores/`. Falta: o Rodrigo aprovar; a balança é um elemento que o briefing original pedia para evitar (decisão do usuário); ambos os vídeos são 720p (podem ficar macios em telas grandes).
+- [x] **Hero no celular:** resolvido com o vídeo e a foto verticais do usuário (ver item acima).
 - [ ] **Fotos reais** no lugar das provisórias (lista do que fotografar no §9 do documento de direção). As atuais têm aparência de imagem gerada.
   - Áreas: textos embutidos nas imagens ("BANK" na 3, placa "DEFESA MÉDICA" na 4), aperto de mão na 1, prédio de colunas e chave fundida a uma engrenagem na 5. Resolução de 944×1104.
   - Contato: `contact-01` mostra uma estatueta da Justiça; desde 2026-09-21 a mesma foto também é a grande do Escritório (`office-01`). Nesse mesmo dia a `office-02` virou um retrato do Rodrigo (`rodrigo-02.png`, 1024×1024, aparência de imagem gerada).

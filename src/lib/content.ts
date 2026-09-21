@@ -3,18 +3,21 @@
  * preenchidos com texto fictício: quando o cliente confirmar, substitua a string aqui.
  */
 
+import { SITE } from "./site";
+
 export const pending = (what: string) => `[${what} A CONFIRMAR]`;
 export const isPending = (text: string) => /^\[.+\]$/.test(text.trim());
 /** Classe de estilo para textos ainda não confirmados. */
 export const pendingClass = (text: string) => (isPending(text) ? "pending" : "");
 
-export const NAV = [
+export const NAV: { id: string; label: string }[] = [
   { id: "escritorio", label: "O escritório" },
   { id: "areas", label: "Áreas de atuação" },
   { id: "profissional", label: "Profissional" },
-  { id: "conteudo", label: "Conteúdo" },
+  ...(SITE.flags.articles ? [{ id: "conteudo", label: "Conteúdo" }] : []),
+  { id: "primeira-conversa", label: "Primeira conversa" },
   { id: "contato", label: "Contato" },
-] as const;
+];
 
 export const HERO = {
   headline: ["Direito exige", "clareza."],
@@ -84,7 +87,7 @@ export const PROFESSIONAL = {
     {
       label: "Formação",
       value:
-        "Especialização em Direito Civil e Processo Civil (UEL, Universidade Estadual de Londrina). Especialização em Direito do Trabalho e Processo do Trabalho (Damásio Educacional).",
+        "Graduação em Direito e especialização em Direito Civil e Processo Civil (UEL, Universidade Estadual de Londrina). Especialização em Direito do Trabalho e Processo do Trabalho (Damásio Educacional).",
     },
     { label: "Inscrição na OAB", value: "OAB/PR 90.980" },
     {
@@ -98,6 +101,79 @@ export const PROFESSIONAL = {
         "Rodrigo Alan Dias advoga desde 2018, em Maringá e região. Antes disso, estagiou na 1ª Vara Federal de Maringá. Fez duas especializações: Direito Civil e Processo Civil, depois Direito do Trabalho e Processo do Trabalho. Trata cada caso como um caso, não como um modelo: lê os documentos com calma e explica o caminho antes de qualquer passo.",
     },
   ],
+} as const;
+
+export type Topic = { slug: string; tab: string; docs: string[] };
+
+/**
+ * "Primeira conversa": por assunto, uma lista de documentos que costumam ajudar a ter em mãos. Só orientação
+ * prática, sem conselho jurídico, promessa ou prazo. `slug` é o de uma área em AREAS (o título completo vem de lá);
+ * ao trocar as áreas, ajuste aqui também. RASCUNHO de 2026-09-21: as listas são genéricas e o Rodrigo precisa validar.
+ */
+export const FIRST_TALK = {
+  title: "Para a primeira conversa.",
+  intro: "Escolha o assunto e veja o que costuma ajudar a ter em mãos. Marque o que você já reuniu e envie a mensagem pelo WhatsApp.",
+  hint: "Documentos ficam para a conversa: não os envie por mensagem.",
+  topics: [
+    {
+      slug: "area-01",
+      tab: "Trabalho",
+      docs: [
+        "Contrato de trabalho e registro do vínculo (carteira de trabalho ou ficha de registro)",
+        "Holerites e comprovantes de pagamento",
+        "Extrato do FGTS",
+        "Controle de jornada, como cartão de ponto ou registros de horário",
+        "Termo de rescisão ou comunicado de desligamento, se houver",
+        "Notificações, intimações ou citações recebidas",
+      ],
+    },
+    {
+      slug: "area-02",
+      tab: "Contratos",
+      docs: [
+        "O contrato completo, com anexos e aditivos, ou a minuta que será assinada",
+        "Documentos de identificação das partes, pessoais ou da empresa",
+        "Conversas por e-mail ou mensagem sobre a negociação",
+        "Comprovantes de pagamento e recibos",
+        "Notificações ou cobranças recebidas",
+      ],
+    },
+    {
+      slug: "area-03",
+      tab: "Consumidor",
+      docs: [
+        "Contrato, proposta ou termo de adesão",
+        "Notas fiscais, recibos e comprovantes de pagamento",
+        "Faturas ou extratos relacionados ao problema",
+        "Protocolos de atendimento e conversas com a empresa",
+        "Fotos, vídeos ou capturas de tela que mostrem o problema",
+        "Documento de identidade e comprovante de residência",
+      ],
+    },
+    {
+      slug: "area-04",
+      tab: "Saúde",
+      docs: [
+        "Contratos com clínicas, hospitais, planos de saúde ou cooperativas",
+        "Documento de registro no conselho da categoria, como o CRM",
+        "Documentos do atendimento em questão, como o prontuário",
+        "Notificações, ofícios ou reclamações recebidas",
+        "Apólice de seguro de responsabilidade profissional, se houver",
+      ],
+    },
+    {
+      slug: "area-05",
+      tab: "Patrimônio",
+      docs: [
+        "Documentos pessoais e certidão de estado civil, com pacto antenupcial ou contrato de convivência, se houver",
+        "Relação dos bens: escrituras e matrículas de imóveis, veículos e participações em empresas",
+        "Se houver empresa: contrato social e alterações",
+        "Identificação dos herdeiros e beneficiários",
+        "Testamento ou planejamento anterior, se houver",
+        "Dívidas e financiamentos em andamento",
+      ],
+    },
+  ] as Topic[],
 } as const;
 
 export type Post = { slug: string; category: string; title: string; date: string };

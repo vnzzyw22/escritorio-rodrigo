@@ -31,7 +31,7 @@ async function HeroPoster() {
         alt=""
         loading="eager"
         fetchPriority="high"
-        className="absolute inset-0 size-full object-cover md:[object-position:50%_55%]"
+        className="absolute inset-0 size-full object-cover [object-position:50%_88%] md:[object-position:50%_55%]"
       />
     </picture>
   );
@@ -53,7 +53,7 @@ export async function Hero() {
       className="dark-surface relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-ink text-paper md:sticky md:top-0 md:z-0 md:block md:h-[100svh] md:min-h-[640px]"
     >
       {/* Mídia. Celular: bloco no topo. Desktop: fundo de tela cheia. */}
-      <div className="relative min-h-[300px] flex-1 md:absolute md:inset-0 md:h-auto md:min-h-0 md:flex-none">
+      <div className="relative min-h-[46svh] flex-1 md:absolute md:inset-0 md:h-auto md:min-h-0 md:flex-none">
         <div className="cv-media absolute inset-0 origin-center">
           <HeroPoster />
           <HeroVideo desktop={media.heroVideoDesktop.src} mobile={media.heroVideoMobile.src} />

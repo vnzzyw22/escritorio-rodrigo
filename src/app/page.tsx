@@ -1,5 +1,6 @@
 import { AreasSection } from "@/components/areas-section";
 import { Contact } from "@/components/contact";
+import { FirstTalk } from "@/components/first-talk";
 import { Footer } from "@/components/footer";
 import { Insights } from "@/components/insights";
 import { MobileBar } from "@/components/mobile-bar";
@@ -9,6 +10,7 @@ import { Opening } from "@/components/opening";
 import { Professional } from "@/components/professional";
 import { Rail } from "@/components/rail";
 import { SocialProof } from "@/components/social-proof";
+import { SITE } from "@/lib/site";
 import { Wordmark } from "@/components/brand";
 
 /** Quase tudo aqui é componente de servidor (HTML, sem JS). Só a interação vive no cliente. */
@@ -30,7 +32,8 @@ export default function Home() {
         <AreasSection />
         <Professional />
         <SocialProof />
-        <Insights />
+        {SITE.flags.articles && <Insights />}
+        <FirstTalk />
         <Contact />
       </main>
       <Footer />

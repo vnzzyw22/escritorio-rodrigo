@@ -72,7 +72,7 @@ export function HeroVideo({ desktop, mobile }: { desktop: string | null; mobile:
       onLoadStart={() => setPlaying(false)}
       onPlaying={() => setPlaying(true)}
       onError={() => setPlaying(false)}
-      className={`absolute inset-0 size-full object-cover transition-opacity duration-[1400ms] md:[object-position:50%_55%] ${
+      className={`absolute inset-0 size-full object-cover transition-opacity duration-[1400ms] [object-position:50%_88%] md:[object-position:50%_55%] ${
         playing ? "opacity-100" : "opacity-0"
       }`}
     />
