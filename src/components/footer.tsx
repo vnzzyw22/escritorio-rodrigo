@@ -37,7 +37,7 @@ export function Footer() {
             <ul>
               {NAV.map((item) => (
                 <li key={item.id}>
-                  <a href={`#${item.id}`} className="label link-u inline-block py-2">
+                  <a href={`#${item.id}`} className="label link-u inline-block py-3.5 md:py-2">
                     {item.label}
                   </a>
                 </li>
@@ -58,7 +58,6 @@ export function Footer() {
 
         <div className="mt-12 max-w-[46rem] md:mt-16 border-t border-graphite-line pt-6 text-[0.9rem] leading-relaxed text-stone">
           <p>{FOOTER.notice}</p>
-          <p className={`mt-2 ${pendingClass(FOOTER.noticePending)}`}>{FOOTER.noticePending}</p>
           <p className="label mt-6 flex flex-wrap gap-x-6 gap-y-2">
             <span>
               © {new Date().getFullYear()} {SITE.name}

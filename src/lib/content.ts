@@ -226,5 +226,4 @@ export const FOOTER = {
   oab: "OAB/PR 90.980",
   notice:
     "Este site tem caráter meramente informativo e não constitui oferta de serviços, captação de clientela nem promessa de resultado.",
-  noticePending: pending("AVISO INSTITUCIONAL A VALIDAR COM O ADVOGADO"),
 } as const;

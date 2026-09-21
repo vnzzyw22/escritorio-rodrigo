@@ -32,8 +32,19 @@ const sans = Schibsted_Grotesk({
 export const metadata: Metadata = {
   title: `${SITE.name} — ${SITE.address.city}, ${SITE.address.state}`,
   description: `${SITE.name}, em ${SITE.address.city} (${SITE.address.state}). ${SITE.address.street}, ${SITE.address.district}.`,
-  // Conceito em apresentação: não indexar até virar site publicado.
+  // Conceito em apresentação: não indexar até virar site publicado (ver também robots.ts).
   robots: { index: false, follow: false },
+  // Domínio definitivo ainda não existe: usa o endereço de produção da Vercel para os links absolutos (og:image).
+  metadataBase: new URL(
+    process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "http://localhost:3000",
+  ),
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    siteName: SITE.name,
+    title: `${SITE.name} — ${SITE.address.city}, ${SITE.address.state}`,
+    description: "Direito exige clareza. Advocacia em Sarandi, na região metropolitana de Maringá.",
+  },
 };
 
 export const viewport: Viewport = {

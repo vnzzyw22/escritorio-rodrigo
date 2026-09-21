@@ -1,6 +1,6 @@
 # Pendências — site Advocacia Rodrigo Alan Dias
 
-Atualizado em 2026-09-21. Estado: estrutura completa e verificada; falta material real e algumas confirmações. Detalhes de direção em `LAW-FIRM-DESIGN-DIRECTION.md` (§13 e §18).
+Atualizado em 2026-09-21, depois de uma revisão completa que inclui as alterações feitas no outro computador (símbolo animado no hero, Primeira conversa, carrossel de avaliações, áreas empilhadas no celular). Estado: estrutura completa e verificada; falta material real e algumas confirmações. Detalhes de direção em `LAW-FIRM-DESIGN-DIRECTION.md` (§13 e §18).
 
 ## 1. Antes de mostrar ao Rodrigo
 
@@ -22,7 +22,7 @@ Hoje aparecem como `[X A CONFIRMAR]`. Editar em `src/lib/content.ts`.
 - [ ] (histórico) **Áreas de atuação reais.** As cinco atuais são EXEMPLOS (Trabalho, Cível e Contratos, Consumidor, Defesa Médica, Planejamento Patrimonial). Fontes públicas citam Cível, Trabalhista, Criminal, Previdenciária, juros abusivos em empréstimos; divergem entre si. Ao confirmar, trocar título, descrição e fotos.
 - [ ] **Validar as listas da "Primeira conversa"** (`FIRST_TALK` em `src/lib/content.ts`): documentos por assunto, rascunho genérico de 2026-09-21 que o Rodrigo deve conferir e ajustar. Vale o mesmo para as 5 áreas, que continuam sendo exemplos (as abas seguem `AREAS`).
 - [ ] **Artigos e publicações:** a seção "Perspectivas sobre o Direito" está DESLIGADA (`SITE.flags.articles = false`), porque os artigos não existem. Os 3 títulos e datas informados em 2026-09-21 continuam guardados em `INSIGHTS.posts`. Para religar: escrever os textos, criar as rotas, o Rodrigo validar (Provimento 205/2021) e ligar a chave.
-- [ ] **Aviso institucional do rodapé.** Há um texto padrão sóbrio; o advogado valida.
+- [ ] **Aviso institucional do rodapé.** Há um texto padrão sóbrio; o advogado valida. (O placeholder `noticePending`, que aparecia como "A CONFIRMAR" no rodapé, foi removido em 2026-09-21.)
 - [ ] **Instagram** `@advocacia_rodrigoalandias`: achado em busca pública; confirmar antes de usar no site.
 - [ ] **E-mail de contato**, se quiser um além do WhatsApp.
 
@@ -51,12 +51,14 @@ Hoje aparecem como `[X A CONFIRMAR]`. Editar em `src/lib/content.ts`.
 - [ ] **Domínio** e onde hospedar. A Vercel no plano gratuito (Hobby) é de uso pessoal e não comercial; para o site do escritório em produção, avaliar o plano pago ou outra hospedagem.
 - [ ] Remover o `noindex` (`src/app/layout.tsx`) e o aviso "Proposta de conceito · não publicado" (`SITE.flags.conceptNotice`).
 - [ ] Validação do conteúdo pelo advogado à luz do Provimento 205/2021 da OAB (o texto integral não foi conferido). Isso inclui a faixa de avaliações do Google.
-- [ ] Favicon, imagem de compartilhamento (og:image) e `robots`/`sitemap`, depois da logo.
+- [x] Favicon (`src/app/icon.png`, `apple-icon.png`), imagem de compartilhamento (`opengraph-image.png`, símbolo oficial sobre fundo escuro) e `robots.ts` (bloqueia tudo enquanto `conceptNotice` estiver ligado): criados em 2026-09-21.
+- [ ] Ao publicar de verdade: `sitemap`, canonical, JSON-LD (LegalService) e og:image com o nome, quando houver domínio.
 - [ ] **Repositório GitHub público** (`vnzzyw22/escritorio-rodrigo`): decidir se deve ser privado, porque contém as fotos provisórias, o retrato e os dados do escritório.
 - [ ] **Conectar a Vercel ao GitHub** para publicar sozinho a cada `git push`. A conexão automática falhou por falta de autorização do app da Vercel no GitHub: Vercel > projeto `escritorio-rodrigo` > Settings > Git > Connect. Enquanto isso, publicar com `npx vercel --prod --yes` na pasta do projeto.
 
 ## 6. Técnico
 
+- [x] **Revisão de 2026-09-21** (build, 7 larguras de 320 a 1440 px sem rolagem horizontal nem erro de JS, navegação desktop e menu mobile, abas, carrossel, formulário, vídeos desktop e mobile): sem falhas funcionais. Corrigidos: área de toque dos links avulsos no celular, foco e `role="alert"` nos erros do formulário, placeholder no rodapé.
 - [ ] **Desempenho:** otimizado em 2026-09-21 (§19 do documento de direção): thread principal na rolagem de 66% para 40% (celular CPU 4x), pior quadro de 231 para 33 ms. Sobra o LCP simulado do Lighthouse no celular (~3,1 s), que não mudou, e o custo das três famílias de fonte (opção: reduzir para duas). Publicado na Vercel em 2026-09-21 (deploy `escritorio-rodrigo-d6y066lcv`): o site no ar já tem as melhorias.
 - [ ] O build avisa que várias imagens estão abaixo da resolução mínima recomendada. É informativo; some quando chegarem as fotos reais.
 - [ ] O servidor de desenvolvimento trava arquivos de imagem no Windows: para trocar uma foto já servida, pare o `npm run dev`, troque o arquivo e suba de novo.

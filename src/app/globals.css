@@ -275,7 +275,7 @@
 .hit::after {
   content: "";
   position: absolute;
-  inset: -0.8rem -0.35rem;
+  inset: -1.05rem -0.4rem;
 }
 
 /* Placeholder de texto: legível, claramente provisório. */

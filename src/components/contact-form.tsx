@@ -38,7 +38,11 @@ export function ContactForm() {
     if (name.trim().length < 2) next.name = "Informe seu nome.";
     if (message.trim().length < 10) next.message = "Escreva um breve resumo, com pelo menos 10 caracteres.";
     setErrors(next);
-    if (next.name || next.message) return;
+    if (next.name || next.message) {
+      // Leva o foco ao primeiro campo com erro (teclado e leitor de tela).
+      document.getElementById(`${uid}-${next.name ? "nome" : "mensagem"}`)?.focus();
+      return;
+    }
     const target = whatsappUrl(buildMessage(name, message));
     setUrl(target);
     window.open(target, "_blank", "noopener,noreferrer");
@@ -61,7 +65,7 @@ export function ContactForm() {
           className={FIELD}
         />
         {errors.name && (
-          <p id={`${uid}-nome-erro`} className="mt-2 text-[0.95rem] text-alert">
+          <p id={`${uid}-nome-erro`} role="alert" className="mt-2 text-[0.95rem] text-alert">
             {errors.name}
           </p>
         )}
@@ -85,7 +89,7 @@ export function ContactForm() {
           {CONTACT.privacy}
         </p>
         {errors.message && (
-          <p id={`${uid}-mensagem-erro`} className="mt-2 text-[0.95rem] text-alert">
+          <p id={`${uid}-mensagem-erro`} role="alert" className="mt-2 text-[0.95rem] text-alert">
             {errors.message}
           </p>
         )}
