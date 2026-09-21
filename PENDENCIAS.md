@@ -53,7 +53,7 @@ Hoje aparecem como `[X A CONFIRMAR]`. Editar em `src/lib/content.ts`.
 
 ## 6. Técnico
 
-- [ ] **Desempenho:** otimizado em 2026-09-21 (§19 do documento de direção): thread principal na rolagem de 66% para 40% (celular CPU 4x), pior quadro de 231 para 33 ms. Sobra o LCP simulado do Lighthouse no celular (~3,1 s), que não mudou, e o custo das três famílias de fonte (opção: reduzir para duas). Publicar de novo na Vercel para o site no ar receber as melhorias.
+- [ ] **Desempenho:** otimizado em 2026-09-21 (§19 do documento de direção): thread principal na rolagem de 66% para 40% (celular CPU 4x), pior quadro de 231 para 33 ms. Sobra o LCP simulado do Lighthouse no celular (~3,1 s), que não mudou, e o custo das três famílias de fonte (opção: reduzir para duas). Publicado na Vercel em 2026-09-21 (deploy `escritorio-rodrigo-d6y066lcv`): o site no ar já tem as melhorias.
 - [ ] O build avisa que várias imagens estão abaixo da resolução mínima recomendada. É informativo; some quando chegarem as fotos reais.
 - [ ] O servidor de desenvolvimento trava arquivos de imagem no Windows: para trocar uma foto já servida, pare o `npm run dev`, troque o arquivo e suba de novo.
 
