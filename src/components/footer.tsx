@@ -53,6 +53,11 @@ export function Footer() {
                 Facebook
               </a>
             </p>
+            <p className="mt-6">
+              <a href="/privacidade" className="label link-u hit">
+                Privacidade e cookies
+              </a>
+            </p>
           </div>
         </div>
 
