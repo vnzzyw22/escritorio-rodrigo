@@ -16,13 +16,13 @@ export function Footer() {
       </div>
 
       <div className="page-x relative py-[clamp(56px,7vw,104px)]">
-        <div className="grid-12 gap-y-12">
+        <div className="grid-12 gap-y-10 md:gap-y-12">
           <div className="col-span-12 md:col-span-5">
             <Wordmark />
             <address className="mt-8 not-italic text-paper/85">
               {a.street}
               <br />
-              {a.district} · {a.city} — {a.state}
+              {a.district} · <span className="whitespace-nowrap">{a.city} — {a.state}</span>
               <br />
               <span className="tabular-nums">{a.zip}</span>
             </address>
@@ -56,7 +56,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 max-w-[46rem] border-t border-graphite-line pt-6 text-[0.9rem] leading-relaxed text-stone">
+        <div className="mt-12 max-w-[46rem] md:mt-16 border-t border-graphite-line pt-6 text-[0.9rem] leading-relaxed text-stone">
           <p>{FOOTER.notice}</p>
           <p className={`mt-2 ${pendingClass(FOOTER.noticePending)}`}>{FOOTER.noticePending}</p>
           <p className="label mt-6 flex flex-wrap gap-x-6 gap-y-2">

@@ -17,7 +17,7 @@ export function Statement() {
       data-label="Declaração"
       data-theme="light"
       aria-labelledby="declaracao-titulo"
-      className="stmt relative z-10 flex min-h-[78svh] items-center overflow-hidden border-t border-paper-line bg-paper text-ink md:min-h-[100svh]"
+      className="stmt relative z-10 flex items-center overflow-hidden border-t border-paper-line bg-paper text-ink md:min-h-[100svh]"
     >
       <div
         aria-hidden="true"
@@ -26,7 +26,7 @@ export function Statement() {
         <RMark size="min(78vw, 1100px)" />
       </div>
 
-      <div className="page-x relative w-full py-[var(--section-y)]">
+      <div className="page-x relative w-full pb-10 pt-[var(--section-y)] md:py-[var(--section-y)]">
         <h2 id="declaracao-titulo" className="text-display-l">
           {STATEMENT.map((line, i) => (
             <Line key={line} delay={i * 0.12} className={indents[i] ?? ""}>

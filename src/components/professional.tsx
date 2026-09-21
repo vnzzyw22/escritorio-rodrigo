@@ -17,8 +17,8 @@ export function Professional() {
       aria-labelledby="profissional-titulo"
       className="section-y relative z-10 cover-deep bg-paper-deep text-ink"
     >
-      <div className="page-x grid-12 gap-y-12">
-        <div className="col-span-12 -mx-[var(--margin)] md:col-span-6 md:mx-0 lg:col-span-5">
+      <div className="page-x grid-12 gap-y-8">
+        <div className="col-span-12 md:col-span-6 lg:col-span-5">
           <Frame
             slot="lawyer"
             sizes="(min-width: 1024px) 42vw, (min-width: 768px) 50vw, 100vw"
@@ -39,7 +39,7 @@ export function Professional() {
             </span>
           </h2>
 
-          <Reveal delay={0.1} className="mt-12 max-w-[34rem]">
+          <Reveal delay={0.1} className="mt-8 max-w-[34rem] md:mt-12">
             <dl className="border-t border-paper-line">
               {PROFESSIONAL.fields.map((f) => (
                 <div

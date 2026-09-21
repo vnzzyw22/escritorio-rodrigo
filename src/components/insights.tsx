@@ -24,7 +24,7 @@ export function Insights() {
       aria-labelledby="conteudo-titulo"
       className="section-y relative z-10 bg-paper text-ink"
     >
-      <div className="page-x grid-12 gap-y-14">
+      <div className="page-x grid-12 gap-y-9 md:gap-y-14">
         <h2 id="conteudo-titulo" className="text-display-m col-span-12 lg:col-span-8">
           <span className="sr-only">{INSIGHTS.title}</span>
           <span aria-hidden="true">
@@ -48,9 +48,9 @@ export function Insights() {
           <ul className="border-t border-paper-line">
             {rest.map((item) => (
               <li key={item.key} className="border-b border-paper-line py-6">
-                <div className="label flex items-center justify-between gap-6 text-ash">
-                  <span className={pendingClass(item.category)}>{item.category}</span>
-                  <span className={pendingClass(item.date)}>{item.date}</span>
+                <div className="label flex flex-wrap items-center justify-between gap-x-6 gap-y-1 text-ash">
+                  <span className={`whitespace-nowrap ${pendingClass(item.category)}`}>{item.category}</span>
+                  <span className={`whitespace-nowrap ${pendingClass(item.date)}`}>{item.date}</span>
                 </div>
                 <p className={`mt-3 font-display text-[1.5rem] leading-[1.2] ${pendingClass(item.title)}`}>
                   {item.title}

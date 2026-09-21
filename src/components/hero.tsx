@@ -3,7 +3,7 @@ import type { CSSProperties } from "react";
 import { HERO } from "@/lib/content";
 import { getMedia } from "@/lib/media.server";
 import { SITE } from "@/lib/site";
-import { RMark } from "./brand";
+import { HeroMark } from "./hero-mark";
 import { HeroVideo } from "./hero-video";
 import { ButtonLink, TextLink } from "./ui";
 
@@ -50,10 +50,10 @@ export async function Hero() {
       data-label="Início"
       data-theme="dark"
       aria-label="Apresentação"
-      className="dark-surface relative isolate overflow-hidden bg-ink text-paper md:sticky md:top-0 md:z-0 md:h-[100svh] md:min-h-[640px]"
+      className="dark-surface relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-ink text-paper md:sticky md:top-0 md:z-0 md:block md:h-[100svh] md:min-h-[640px]"
     >
       {/* Mídia. Celular: bloco no topo. Desktop: fundo de tela cheia. */}
-      <div className="relative h-[52svh] min-h-[360px] md:absolute md:inset-0 md:h-auto">
+      <div className="relative min-h-[300px] flex-1 md:absolute md:inset-0 md:h-auto md:min-h-0 md:flex-none">
         <div className="cv-media absolute inset-0 origin-center">
           <HeroPoster />
           <HeroVideo desktop={media.heroVideoDesktop.src} mobile={media.heroVideoMobile.src} />
@@ -65,23 +65,23 @@ export async function Hero() {
         <div className="cv-veil absolute inset-0 bg-ink opacity-0" />
       </div>
 
-      {/* A opacidade fica no contêiner: a animação de entrada termina em opacity 1 e a sobrescreveria. */}
-      <div
-        aria-hidden="true"
-        className="absolute -right-[7vw] -bottom-[16vw] hidden opacity-[0.06] md:block"
-      >
-        <div className="fade-in" style={delay(0.6)}>
-          <RMark size="min(64vw, 900px)" onDark />
-        </div>
+      {/*
+        Assinatura: símbolo oficial, pequeno, sem moldura, desenhado a traço e depois preenchido
+        (hero-mark.tsx). O contêiner (.hero-mark) é movido pela rolagem; o desenho é do próprio SVG.
+        Celular: no fluxo, acima do título, sobre ink (fora do vídeo).
+      */}
+      <div className="hero-mark page-x pointer-events-none relative pt-6 md:absolute md:inset-x-0 md:top-[calc(var(--nav-h)+clamp(24px,5.5vh,60px))] md:pt-0">
+        <HeroMark className="w-[clamp(72px,20vw,88px)] md:w-[clamp(96px,8vw,128px)]" />
       </div>
 
+
       {/* Texto. Celular: abaixo da foto, sobre ink. Desktop: sobre a base da imagem. */}
-      <div className="cv-text page-x relative flex flex-col pb-8 pt-10 md:absolute md:inset-0 md:pb-[clamp(24px,4.5vh,52px)] md:pt-[var(--nav-h)]">
-        <div className="grid-12 items-end gap-y-8 md:mt-auto">
+      <div className="cv-text page-x relative flex flex-col pb-7 pt-6 md:absolute md:inset-0 md:pb-[clamp(24px,4.5vh,52px)] md:pt-[var(--nav-h)]">
+        <div className="grid-12 items-end gap-y-5 md:mt-auto lg:gap-y-8">
           <h1 className="text-display-xl col-span-12 lg:col-span-7">
             {HERO.headline.map((line, i) => (
               <span key={line} className="-mb-[0.14em] block overflow-hidden pb-[0.14em]">
-                <span className="rise block" style={delay(0.15 + i * 0.14)}>
+                <span className="rise block" style={delay(1.7 + i * 0.14)}>
                   {line}
                 </span>
               </span>
@@ -89,12 +89,12 @@ export async function Hero() {
           </h1>
 
           <div className="col-span-12 lg:col-span-5 lg:col-start-8 lg:pb-2">
-            <p className="fade-in text-lead max-w-[24rem] text-paper/90" style={delay(0.85)}>
+            <p className="fade-in text-lead max-w-[24rem] text-paper/90" style={delay(2.4)}>
               {HERO.lead}
             </p>
             <div
-              className="fade-in mt-8 flex flex-col items-stretch gap-5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-8 sm:gap-y-5"
-              style={delay(1.05)}
+              className="fade-in mt-6 flex flex-col items-stretch gap-4 md:mt-8 md:gap-5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-8 sm:gap-y-5"
+              style={delay(2.6)}
             >
               <ButtonLink href={HERO.primary.href}>{HERO.primary.label}</ButtonLink>
               <TextLink href={HERO.secondary.href} className="label self-start sm:self-auto">
@@ -105,8 +105,8 @@ export async function Hero() {
         </div>
 
         <div
-          className="fade-in label mt-10 flex items-center justify-between gap-6 border-t border-paper/20 pt-4 text-paper/75 md:mt-12"
-          style={delay(1.3)}
+          className="fade-in label mt-10 hidden items-center justify-between gap-6 border-t border-paper/20 pt-4 text-paper/75 md:mt-12 md:flex"
+          style={delay(2.85)}
         >
           <span>{SITE.name}</span>
           <span className="hidden sm:inline">

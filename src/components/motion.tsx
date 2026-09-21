@@ -18,6 +18,7 @@ export async function Frame({
   range = 6,
   delay = 0,
   position,
+  mobileRatio,
 }: {
   slot: string;
   sizes: string;
@@ -26,14 +27,16 @@ export async function Frame({
   range?: number;
   delay?: number;
   position?: string;
+  /** Proporção só abaixo de md (celular), quando a do slot recorta demais a foto. */
+  mobileRatio?: string;
 }) {
   const s = (await getMedia())[slot];
   const moving = Boolean(s.src) && range > 0;
   return (
     <div
       data-reveal
-      className={`rv-curtain ${className}`}
-      style={{ aspectRatio: s.ratio, "--d": `${delay}s` } as CSSProperties}
+      className={`rv-curtain [aspect-ratio:var(--arm)] md:[aspect-ratio:var(--ar)] ${className}`}
+      style={{ "--ar": s.ratio, "--arm": mobileRatio ?? s.ratio, "--d": `${delay}s` } as CSSProperties}
     >
       {moving ? (
         <div className="parallax" style={{ "--pr": `${range}%` } as CSSProperties}>

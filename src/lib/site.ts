@@ -25,7 +25,7 @@ export const SITE = {
     reviews:
       "https://www.google.com/maps/search/?api=1&query=Advocacia+Rodrigo+Alan+Dias%2C+Sarandi%2C+PR",
   },
-  /** Agregado público informado pelo cliente. Sem citações, nomes ou casos. */
+  /** Agregado do Google confirmado pelo usuário (2026-09-21). Sem citações, nomes ou casos. */
   reviews: { rating: "5,0", count: 426 },
   flags: {
     /**

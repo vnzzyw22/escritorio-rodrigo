@@ -20,7 +20,7 @@ export function Office() {
       aria-labelledby="escritorio-titulo"
       className="section-y relative z-10 overflow-x-clip bg-paper text-ink"
     >
-      <div className="page-x grid-12 gap-y-12 md:gap-y-0">
+      <div className="page-x grid-12 gap-y-8 md:gap-y-0">
         <h2
           id="escritorio-titulo"
           className="text-display-m col-span-12 md:col-span-5 md:row-start-1 lg:col-span-4 md:pt-[clamp(0px,6vw,110px)]"
@@ -36,9 +36,13 @@ export function Office() {
         </h2>
 
         <div className="relative col-span-12 md:col-span-7 md:col-start-6 md:row-span-2 md:row-start-1 md:-mr-[var(--margin)] lg:col-span-8 lg:col-start-5">
-          <Frame slot="office1" sizes="(min-width: 1024px) 62vw, 100vw" range={6} tone="dark" />
-          <div className="absolute -bottom-[13%] left-0 hidden w-[31%] -translate-x-[34%] border-[10px] border-paper md:block">
-            <Frame slot="office2" sizes="20vw" range={0} delay={0.25} tone="dark" />
+          {/* O contêiner acima estica com o texto (ocupa duas linhas da grade); a foto de detalhe se ancora
+              na foto grande, para continuar sobreposta ao canto qualquer que seja o tamanho do texto. */}
+          <div className="relative">
+            <Frame slot="office1" sizes="(min-width: 1024px) 62vw, 100vw" range={6} tone="dark" mobileRatio="5/4" />
+            <div className="absolute -bottom-[13%] left-0 hidden w-[31%] -translate-x-[34%] border-[10px] border-paper md:block">
+              <Frame slot="office2" sizes="20vw" range={0} delay={0.25} tone="dark" />
+            </div>
           </div>
         </div>
 
@@ -50,7 +54,7 @@ export function Office() {
               <dd className="mt-2">
                 {a.street}
                 <br />
-                {a.district} · {a.city} — {a.state}
+                {a.district} · <span className="whitespace-nowrap">{a.city} — {a.state}</span>
                 <br />
                 <span className="tabular-nums">{a.zip}</span>
               </dd>

@@ -17,7 +17,7 @@ export function SocialProof() {
       aria-label="Avaliações no Google"
       className="relative z-10 border-t border-paper-line bg-paper text-ink"
     >
-      <Reveal className="page-x grid-12 items-baseline gap-y-5 py-[clamp(56px,7vw,104px)]">
+      <Reveal className="page-x grid-12 items-baseline gap-y-5 py-[clamp(40px,7vw,104px)]">
         <p className="text-display-m col-span-12 lg:col-span-9">
           Nota {SITE.reviews.rating} em {SITE.reviews.count} avaliações no Google.
         </p>

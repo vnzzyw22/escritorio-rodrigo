@@ -28,7 +28,8 @@ export const STATEMENT = ["Antes de agir,", "é preciso", "compreender."] as con
 
 export const OFFICE = {
   title: "Experiência construída ao longo do tempo.",
-  body: pending("DESCRIÇÃO DO ESCRITÓRIO"),
+  /** Rascunho de 2026-09-21 a partir de dados públicos (LinkedIn, Instagram) e do que o usuário informou. O Rodrigo precisa aprovar. */
+  body: "Advocacia artesanal e humanizada, em Sarandi, na região metropolitana de Maringá. Cada caso é tratado de forma individual, com leitura atenta dos documentos e uma explicação clara do caminho possível. O Dr. Rodrigo advoga há mais de oito anos e atua, principalmente, com Direito do Trabalho, Direito Civil e Contratos.",
 } as const;
 
 export type Area = { slug: string; title: string; description: string };
@@ -80,13 +81,22 @@ export const AREAS: Area[] = [
 export const PROFESSIONAL = {
   name: ["Rodrigo", "Alan", "Dias"],
   fields: [
-    { label: "Formação", value: pending("FORMAÇÃO") },
+    {
+      label: "Formação",
+      value:
+        "Especialização em Direito Civil e Processo Civil (UEL, Universidade Estadual de Londrina). Especialização em Direito do Trabalho e Processo do Trabalho (Damásio Educacional).",
+    },
     { label: "Inscrição na OAB", value: "OAB/PR 90.980" },
     {
       label: "Atuação",
       value: "Advocacia com atuação predominante no Paraná, com escritório em Sarandi, na região metropolitana de Maringá.",
     },
-    { label: "Apresentação", value: pending("TEXTO DE APRESENTAÇÃO") },
+    /** Rascunho para oferecer ao Rodrigo (2026-09-21), a partir do LinkedIn. Ele precisa aprovar. */
+    {
+      label: "Apresentação",
+      value:
+        "Rodrigo Alan Dias advoga desde 2018, em Maringá e região. Antes disso, estagiou na 1ª Vara Federal de Maringá. Fez duas especializações: Direito Civil e Processo Civil, depois Direito do Trabalho e Processo do Trabalho. Trata cada caso como um caso, não como um modelo: lê os documentos com calma e explica o caminho antes de qualquer passo.",
+    },
   ],
 } as const;
 
@@ -94,8 +104,30 @@ export type Post = { slug: string; category: string; title: string; date: string
 
 export const INSIGHTS = {
   title: "Perspectivas sobre o Direito.",
-  /** Sem publicações reais ainda: a seção mostra a estrutura com placeholders. */
-  posts: [] as Post[],
+  /**
+   * Títulos e datas informados pelo usuário em 2026-09-21. Ainda não existe página de artigo:
+   * as linhas não são links (ver insights.tsx). O primeiro vira a matéria em destaque.
+   */
+  posts: [
+    {
+      slug: "fgts-atrasado-rescisao-indireta",
+      category: "Direito do Trabalho",
+      title: "FGTS atrasado dá direito a pedir demissão forçada (Rescisão Indireta)?",
+      date: "21 de setembro de 2026",
+    },
+    {
+      slug: "recusa-de-hora-extra-clt",
+      category: "Direito do Trabalho",
+      title: "O funcionário pode se recusar a fazer hora extra? Entenda as regras da CLT",
+      date: "15 de setembro de 2026",
+    },
+    {
+      slug: "assessoria-juridica-antes-de-assinar-contratos",
+      category: "Direito Civil e Contratos",
+      title: "Cuidados antes de assinar: Por que uma assessoria jurídica evita prejuízos contratuais",
+      date: "10 de setembro de 2026",
+    },
+  ] as Post[],
   placeholder: {
     featured: { category: "[CATEGORIA]", title: pending("TÍTULO DO ARTIGO"), date: "[DATA]" },
     items: [1, 2, 3].map((n) => ({
@@ -110,7 +142,7 @@ export const INSIGHTS = {
 export const CONTACT = {
   title: "Vamos conversar sobre o seu contexto.",
   intro: "Escreva seu nome e um breve resumo. A conversa continua pelo WhatsApp.",
-  hours: pending("HORÁRIO DE ATENDIMENTO"),
+  hours: "Segunda a sexta, das 9h às 18h. Sábado, das 9h às 13h.",
   privacy: "Não envie documentos nem informações sigilosas por este formulário.",
 } as const;
 

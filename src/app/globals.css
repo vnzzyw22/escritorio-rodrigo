@@ -24,6 +24,12 @@
   --section-y: clamp(96px, 13vw, 200px);
   --nav-h: 76px;
 }
+/* Celular: 96 px de folga em cima e embaixo de cada seção era exagero (192 px entre uma e outra). */
+@media (max-width: 767px) {
+  :root {
+    --section-y: 64px;
+  }
+}
 
 @theme inline {
   --color-ink: var(--ink);
@@ -178,6 +184,76 @@
   animation: fade-in 1.4s var(--ease) both;
   animation-delay: var(--d, 0s);
 }
+/* Assinatura do hero (hero-mark.tsx): o símbolo é desenhado a traço e depois preenchido.
+   O estado-base é o FINAL (preenchido, traço invisível): sem CSS de animação, com movimento reduzido
+   ou depois de terminar, o símbolo está pronto. Cada peça tem pathLength=1, então o traço é
+   dasharray "1 2" + dashoffset 1 → 0 (o "2" garante que nada aparece antes de começar).
+   Cada peça define --t0 (início do traço), --td (duração), --tf (início do preenchimento = fim do
+   traço) e --ts (início do sumiço do traço). Stroke e fill nunca são o mesmo elemento visível ao
+   mesmo tempo por muito tempo: o traço engrossa 1,3 unidade para fora, por isso ele some ao final
+   e o desenho termina exatamente no contorno vetorizado. */
+.lg {
+  color: var(--paper);
+}
+.lg path {
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 2.6;
+  stroke-linejoin: round;
+  stroke-opacity: 0;
+}
+.lg .lg-line {
+  fill: none;
+  stroke-dasharray: 1 2;
+}
+.lg .lg-leaf {
+  stroke-dasharray: 1 2;
+}
+.lg .lg-fill {
+  stroke: none;
+}
+@keyframes lg-trace {
+  from {
+    stroke-dashoffset: 1;
+    stroke-opacity: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+    stroke-opacity: 1;
+  }
+}
+@keyframes lg-fill {
+  from {
+    fill-opacity: 0;
+  }
+  to {
+    fill-opacity: 1;
+  }
+}
+@keyframes lg-settle {
+  from {
+    stroke-opacity: 1;
+  }
+  to {
+    stroke-opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .lg .lg-line {
+    animation:
+      lg-trace var(--td) cubic-bezier(0.5, 0, 0.2, 1) var(--t0) both,
+      lg-settle 0.5s var(--ease) var(--ts) both;
+  }
+  .lg .lg-leaf {
+    animation:
+      lg-trace var(--td) cubic-bezier(0.5, 0, 0.2, 1) var(--t0) both,
+      lg-fill 0.7s var(--ease) var(--tf) backwards,
+      lg-settle 0.5s var(--ease) var(--ts) both;
+  }
+  .lg .lg-fill {
+    animation: lg-fill 0.9s var(--ease) var(--tf) backwards;
+  }
+}
 
 /* Link de texto: sublinhado que ganha contraste no hover/foco. */
 .link-u {
@@ -316,6 +392,29 @@
     transform: translateY(-5%);
   }
 }
+/* Símbolo do hero na rolagem: sobe pouco, esmaece a partir de 20% e some por volta de 60%. */
+@keyframes mark-out {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-10px);
+  }
+  40% {
+    opacity: 0.55;
+    transform: translateY(-28px);
+  }
+  60% {
+    opacity: 0;
+    transform: translateY(-48px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-84px);
+  }
+}
 @keyframes rail-fill {
   to {
     transform: scaleY(1);
@@ -357,16 +456,87 @@
       animation-timeline: --stmt;
       animation-range: entry;
     }
+    .hero-mark {
+      animation: mark-out linear both;
+      animation-timeline: --stmt;
+      animation-range: entry;
+    }
     .stmt-mark {
       animation: stmt-mark linear both;
       animation-timeline: --stmt;
       animation-range: cover;
     }
   }
+  @media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+    /* Celular: o hero não é fixo; o símbolo acompanha os primeiros 40% de uma tela de rolagem. */
+    .hero-mark {
+      animation: mark-out linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0px 40svh;
+    }
+  }
   @media (prefers-reduced-motion: no-preference) {
     .rail-fill {
       animation: rail-fill linear both;
       animation-timeline: scroll(root block);
+    }
+  }
+}
+
+/* ---------- Áreas no celular/tablet: cartões que grudam sob o menu e são cobertos pelo seguinte ----------
+   Sem movimento reduzido: sticky. O cartão de baixo sobe e cobre o de cima; o coberto recua (escala e
+   escurece) enquanto o próximo passa por cima, guiado pela rolagem (CSS scroll-driven, compositor).
+   Cada cartão tem o seu próprio deslocamento (--i) para a borda do anterior aparecer, como um baralho.
+   Movimento reduzido ou navegador sem suporte: os cartões ficam em coluna, lado a lado, sem grudar. */
+.area-stack {
+  --card-h: min(64svh, 520px);
+  --stick: calc(var(--nav-h) + 12px);
+}
+.area-card {
+  height: var(--card-h);
+  margin-bottom: 12px;
+}
+.area-card:last-child {
+  margin-bottom: 0;
+}
+@keyframes area-recede {
+  to {
+    transform: scale(0.94);
+  }
+}
+@keyframes area-veil {
+  to {
+    opacity: 0.72;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .area-card {
+    position: sticky;
+    top: calc(var(--stick) + var(--i) * 10px);
+    /* Respiro de leitura: o cartão seguinte só começa a subir depois dessa distância. */
+    margin-bottom: clamp(48px, 12svh, 110px);
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .area-stack {
+      timeline-scope: var(--tls);
+    }
+    .area-card {
+      view-timeline-name: var(--tl);
+      view-timeline-axis: block;
+    }
+    /* Recua enquanto o cartão seguinte sobe da base do anterior até a posição de grudar. */
+    .area-card:not(:last-child) .area-inner {
+      transform-origin: 50% 0;
+      animation: area-recede linear both;
+      animation-timeline: var(--tl-next);
+      animation-range: cover calc(100svh - var(--stick) - var(--card-h)) cover calc(100svh - var(--stick));
+    }
+    .area-card:not(:last-child) .area-veil {
+      animation: area-veil linear both;
+      animation-timeline: var(--tl-next);
+      animation-range: cover calc(100svh - var(--stick) - var(--card-h)) cover calc(100svh - var(--stick));
     }
   }
 }
