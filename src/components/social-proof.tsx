@@ -1,5 +1,3 @@
-"use client";
-
 import { SITE } from "@/lib/site";
 import { Reveal } from "./motion";
 import { TextLink } from "./ui";

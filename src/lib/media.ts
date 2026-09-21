@@ -20,10 +20,12 @@ export type SlotDef = {
 };
 
 export type ResolvedSlot = SlotDef & {
-  /** URL pública, ou null quando o arquivo não existe. */
+  /** URL pública, ou null quando o arquivo não existe. Vídeos levam ?v=<hash> (cache imutável). */
   src: string | null;
   width: number | null;
   lowRes: boolean;
+  /** Miniatura borrada (data URL) gerada no build, usada enquanto a foto carrega. */
+  blur: string | null;
 };
 
 export type ResolvedMedia = Record<string, ResolvedSlot>;

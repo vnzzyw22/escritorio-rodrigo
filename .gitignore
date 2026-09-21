@@ -52,3 +52,7 @@ next-env.d.ts
 # originais em alta (fora de public/: não são servidos nem versionados)
 /assets-originais/
 /.impeccable/hook.cache.json
+
+# gerados no build por scripts/optimize-media.mjs
+/public/_img/
+/src/lib/image-manifest.json

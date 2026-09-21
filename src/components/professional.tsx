@@ -1,5 +1,3 @@
-"use client";
-
 import { PROFESSIONAL, pendingClass } from "@/lib/content";
 import { Frame, Line, Reveal } from "./motion";
 import { ButtonLink } from "./ui";
@@ -17,7 +15,7 @@ export function Professional() {
       data-label="Profissional"
       data-theme="light"
       aria-labelledby="profissional-titulo"
-      className="section-y relative z-10 bg-paper-deep text-ink"
+      className="section-y relative z-10 cover-deep bg-paper-deep text-ink"
     >
       <div className="page-x grid-12 gap-y-12">
         <div className="col-span-12 -mx-[var(--margin)] md:col-span-6 md:mx-0 lg:col-span-5">

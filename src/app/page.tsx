@@ -1,4 +1,4 @@
-import { Areas } from "@/components/areas";
+import { AreasSection } from "@/components/areas-section";
 import { Contact } from "@/components/contact";
 import { Footer } from "@/components/footer";
 import { Insights } from "@/components/insights";
@@ -9,7 +9,9 @@ import { Opening } from "@/components/opening";
 import { Professional } from "@/components/professional";
 import { Rail } from "@/components/rail";
 import { SocialProof } from "@/components/social-proof";
+import { Wordmark } from "@/components/brand";
 
+/** Quase tudo aqui é componente de servidor (HTML, sem JS). Só a interação vive no cliente. */
 export default function Home() {
   return (
     <>
@@ -19,13 +21,13 @@ export default function Home() {
       >
         Ir para o conteúdo
       </a>
-      <Navbar />
+      <Navbar brand={<Wordmark />} />
       <Rail />
       <MobileBar />
       <main id="conteudo-principal">
         <Opening />
         <Office />
-        <Areas />
+        <AreasSection />
         <Professional />
         <SocialProof />
         <Insights />

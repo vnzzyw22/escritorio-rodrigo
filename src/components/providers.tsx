@@ -1,20 +1,7 @@
 "use client";
 
-import { LazyMotion, MotionConfig } from "framer-motion";
 import { createContext, useContext, useEffect, useState } from "react";
-import type { ResolvedMedia, ResolvedSlot } from "@/lib/media";
-
-/* ---------------------------------------------------------------- mídia */
-
-const MediaContext = createContext<ResolvedMedia | null>(null);
-
-export function useSlot(id: string): ResolvedSlot {
-  const media = useContext(MediaContext);
-  if (!media) throw new Error("Providers ausente");
-  const slot = media[id];
-  if (!slot) throw new Error(`Slot de mídia desconhecido: ${id}`);
-  return slot;
-}
+import { RevealObserver } from "./reveal-observer";
 
 /* ------------------------------------------------------- seção ativa */
 
@@ -25,21 +12,21 @@ const SectionContext = createContext<ActiveSection>(INITIAL);
 
 export const useActiveSection = () => useContext(SectionContext);
 
-/** Linha de leitura: a seção ativa é a última (na ordem do DOM) cujo topo já passou dela. */
+/** Linha de leitura: a seção ativa é a última (na ordem do DOM) que cruza uma faixa fina a 72px do topo. */
 const READING_LINE = 72;
 
 function Sections({ children }: { children: React.ReactNode }) {
   const [active, setActive] = useState<ActiveSection>(INITIAL);
 
   useEffect(() => {
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const nodes = Array.from(document.querySelectorAll<HTMLElement>("[data-section]"));
-      let current = nodes[0];
-      for (const node of nodes) {
-        if (node.getBoundingClientRect().top <= READING_LINE) current = node;
-      }
+    const nodes = Array.from(document.querySelectorAll<HTMLElement>("[data-section]"));
+    if (!nodes.length) return;
+    const crossing = new Set<HTMLElement>();
+    let io: IntersectionObserver | null = null;
+
+    const publish = () => {
+      let current: HTMLElement | undefined;
+      for (const n of nodes) if (crossing.has(n)) current = n; // ordem do DOM: a última vence
       if (!current) return;
       const next: ActiveSection = {
         id: current.dataset.section ?? "inicio",
@@ -50,16 +37,37 @@ function Sections({ children }: { children: React.ReactNode }) {
         prev.id === next.id && prev.theme === next.theme && prev.label === next.label ? prev : next,
       );
     };
-    const schedule = () => {
-      if (!frame) frame = requestAnimationFrame(update);
+
+    // Um observador com uma faixa de 1px: só dispara quando uma seção entra ou sai dela.
+    // Sem leitura de layout a cada quadro de rolagem.
+    const observe = () => {
+      io?.disconnect();
+      crossing.clear();
+      const bottom = Math.max(0, window.innerHeight - READING_LINE - 1);
+      io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) crossing.add(e.target as HTMLElement);
+            else crossing.delete(e.target as HTMLElement);
+          }
+          publish();
+        },
+        { rootMargin: `-${READING_LINE}px 0px -${bottom}px 0px` },
+      );
+      nodes.forEach((n) => io!.observe(n));
     };
-    schedule();
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
+
+    observe();
+    let timer = 0;
+    const onResize = () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(observe, 150);
+    };
+    window.addEventListener("resize", onResize);
     return () => {
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
-      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("resize", onResize);
+      window.clearTimeout(timer);
+      io?.disconnect();
     };
   }, []);
 
@@ -68,25 +76,11 @@ function Sections({ children }: { children: React.ReactNode }) {
 
 /* --------------------------------------------------------------- raiz */
 
-// Recursos de animação carregados depois do primeiro paint; o JS inicial só leva o núcleo (`m`).
-const loadFeatures = () => import("./motion-features").then((mod) => mod.default);
-
-export function Providers({
-  media,
-  children,
-}: {
-  media: ResolvedMedia;
-  children: React.ReactNode;
-}) {
+export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    // "user": respeita prefers-reduced-motion nas animações de transform.
-    // clip-path e vídeo são tratados à parte (useReduceMotion), porque o framer não os desliga.
-    <MotionConfig reducedMotion="user">
-      <LazyMotion features={loadFeatures} strict>
-        <MediaContext.Provider value={media}>
-          <Sections>{children}</Sections>
-        </MediaContext.Provider>
-      </LazyMotion>
-    </MotionConfig>
+    <Sections>
+      <RevealObserver />
+      {children}
+    </Sections>
   );
 }

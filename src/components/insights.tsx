@@ -1,5 +1,3 @@
-"use client";
-
 import { INSIGHTS, pendingClass } from "@/lib/content";
 import { Frame, Line, Reveal } from "./motion";
 

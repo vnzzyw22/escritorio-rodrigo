@@ -1,8 +1,6 @@
-"use client";
-
 import Image from "next/image";
 import type { ResolvedSlot } from "@/lib/media";
-import { useSlot } from "./providers";
+import { getMedia } from "@/lib/media.server";
 
 type Props = {
   slot: string;
@@ -14,24 +12,16 @@ type Props = {
   tone?: "dark" | "light";
   /** Sobrescreve o object-position do manifesto. */
   position?: string;
-  quality?: 60 | 75 | 85;
   className?: string;
 };
 
 /**
- * Preenche o pai (que precisa ser `relative` e ter tamanho).
+ * Preenche o pai (que precisa ser `relative` e ter tamanho). Componente de servidor: não envia JS.
  * Arquivo ausente → placeholder que preserva a proporção e diz o que inserir.
+ * Enquanto a foto carrega, aparece a miniatura borrada gerada no build (sem "pulo" de preto para imagem).
  */
-export function Photo({
-  slot,
-  sizes,
-  eager,
-  tone = "dark",
-  position,
-  quality = 75,
-  className = "",
-}: Props) {
-  const s = useSlot(slot);
+export async function Photo({ slot, sizes, eager, tone = "dark", position, className = "" }: Props) {
+  const s = (await getMedia())[slot];
   return (
     <div className={`absolute inset-0 overflow-hidden ${className}`}>
       {s.src ? (
@@ -40,9 +30,10 @@ export function Photo({
           alt={s.alt}
           fill
           sizes={sizes}
-          quality={quality}
           loading={eager ? "eager" : "lazy"}
           fetchPriority={eager ? "high" : undefined}
+          placeholder={s.blur ? "blur" : "empty"}
+          blurDataURL={s.blur ?? undefined}
           className="object-cover"
           style={{ objectPosition: position ?? s.position ?? "50% 50%" }}
         />

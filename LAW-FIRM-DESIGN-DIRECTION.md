@@ -221,8 +221,36 @@ Cards de ícone + título + texto; grade de três; métricas grandes com rótulo
 
 **Limite conhecido de desempenho:** o TBT de ~1,1 s no cenário mais pessimista vem quase todo de layout (≈ 0,9 s), e ~0,65 s disso são as três famílias de webfont (com fontes do sistema cai para ~0,29 s). Uma página mínima do mesmo build fica em ~0,25 s. `font-display: optional` só reduziu ~12% e foi descartado (esconderia a tipografia da marca na primeira visita lenta). Opções, se for preciso baixar mais: reduzir para duas famílias (por exemplo, Caslon Display + Schibsted), ou `content-visibility: auto` nas seções abaixo da dobra (exige cuidado com âncoras e parallax).
 
+## 19. Otimização de desempenho (2026-09-21)
+
+Diagnóstico com Lighthouse, teste de rolagem real (rolagem por roda, CPU 4x no celular e 2x no desktop) e trace da thread principal. Causa principal do travamento: animações de rolagem em JavaScript (parallax de 8 fotos, trilho, "R" do statement), que reescreviam transforms a cada quadro e mantinham a thread principal ocupada.
+
+**O que mudou (o visual foi preservado):**
+- Reveals, cortina das fotos, parallax, cortina do hero e trilho agora são CSS (`transition` e `animation-timeline`), só com `transform` e `opacity`, no compositor. Um único IntersectionObserver aciona todas as revelações. O framer-motion foi removido.
+- Seções viraram componentes de servidor (HTML, sem JS de hidratação). No cliente ficam só a navegação, o trilho, a barra do celular, o vídeo do hero, o formulário e a interação das Áreas.
+- Menu do celular sem `overflow:hidden` no `<html>` (forçava um layout da página inteira). A seção ativa vem de um IntersectionObserver, sem leitura de layout a cada quadro.
+- Fotos: variantes responsivas geradas no build (`scripts/optimize-media.mjs`, hash no nome, cache imutável) e miniatura borrada enquanto carregam. Sem otimizador em tempo de execução (o primeiro acesso levava 160 a 480 ms por foto). Fotos do acordeão só são montadas ao abrir a linha.
+- Vídeo do hero: faststart, sem áudio, loop contínuo (dissolve de 1 s do fim para o início), versão vertical própria para o celular, URL com hash e cache imutável.
+- Statement no celular menos alto (78svh) e logotipo do menu sem quebra em 320 px.
+
+| Medida (build de produção local) | Antes | Depois |
+|---|---|---|
+| Thread principal ocupada na rolagem, celular CPU 4x | 66% | 40% |
+| Quadros acima de 33 ms na rolagem, celular | 14% (119 de 853) | 2,3% (21 de 926) |
+| Pior quadro na rolagem, celular | 231 ms | 33,5 ms |
+| Pior quadro na rolagem, desktop CPU 2x | 1333 ms | 100 ms |
+| Abrir o menu no celular (CPU 4x) | 190 a 700 ms | 136 ms (88 ms sem vídeo) |
+| CLS na rolagem, celular | 0,035 | 0 |
+| JavaScript transferido | 190 KB | 147 KB |
+| Lighthouse desktop | 99 (SI 1,09 s; 2,02 MB) | 100 (SI 0,43 s; 1,62 MB) |
+| Lighthouse celular (mediana de 3) | 93 (LCP 3,12 s; TBT 61 ms) | 92 (LCP 3,08 s; TBT 44 ms) |
+
+**Sem ganho ou pior:** o LCP do Lighthouse no celular quase não mudou (o atraso de renderização vem da thread principal na simulação de CPU 4x). O Speed Index do celular subiu (1,29 para 4,09 s) e o peso passou de 0,37 para 0,75 MB porque o celular agora toca o vídeo vertical (0,45 MB), que entra em fade depois do carregamento e o Lighthouse conta essa mudança visual. A variação entre execuções do Lighthouse é alta (notas 67, 92 e 95).
+
 ## Registro de decisões
 
 - 2026-09-20 — Conceito, paleta e tipografia definidos. Newsreader descartada (lista de fontes-padrão de IA); Libre Caslon escolhida por espécime. Sem numeração de seção nem kicker (regra do Impeccable). Concept-seed não executado: direção pinada pelo brief.
 - 2026-09-20 — Cabeçalho transparente só no topo do hero; sólido nas demais seções (conteúdo passava por baixo do menu). Placeholders de foto com rótulo no topo. Áreas com placeholder curto e estado inativo em 55% de paper (contraste). Metadados do Conteúdo em `[CATEGORIA]` e `[DATA]`. Framer-motion via `LazyMotion` (`m`, recursos carregados sob demanda). Faces de fonte não usadas removidas.
 - 2026-09-20 — Bloco de papel timbrado redefine o contexto (`.paper-surface`) porque fica dentro de seção escura.
+- 2026-09-21 — Otimização de desempenho (§19): animações em CSS, framer-motion removido, seções de servidor, pipeline de imagens no build, vídeo do hero processado com versão vertical. Loop do vídeo com dissolve de 1 s (ajuste técnico do arquivo original, guardado em `assets-originais/hero/`).
+

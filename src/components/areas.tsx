@@ -1,28 +1,45 @@
 "use client";
 
-import { AnimatePresence, m } from "framer-motion";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { AREAS, pendingClass } from "@/lib/content";
-import { practiceSlotId } from "@/lib/media";
-import { useMediaQuery, useReduceMotion } from "./hooks";
-import { EASE, EASE_INOUT, Line } from "./motion";
-import { Photo } from "./photo";
+import { useMediaQuery } from "./hooks";
+import { Line } from "./reveal";
 import { Arrow } from "./ui";
+
+type Photos = {
+  /** Foto de cada área dentro do acordeão (celular). */
+  accordion: Record<string, ReactNode>;
+  /** Foto de cada área no painel fixo (desktop). */
+  panel: Record<string, ReactNode>;
+};
 
 /**
  * Áreas de atuação como índice vertical. Desktop: passar o mouse (ou focar) troca a imagem
  * e a descrição no painel fixo. Celular: cada linha abre em acordeão com a sua imagem.
+ * As fotos chegam prontas do servidor (`photos`); aqui só a interação vive no cliente.
+ * A troca de foto é um "wipe" em CSS (transform), e as fotos do acordeão só são montadas quando a
+ * linha é aberta: o celular não baixa cinco fotos que talvez nunca sejam vistas.
  */
-export function Areas() {
+export function Areas({ photos }: { photos: Photos }) {
   const [active, setActive] = useState(0);
+  const [prev, setPrev] = useState<number | null>(null);
+  const [opened, setOpened] = useState<number[]>([0]);
   const desktop = useMediaQuery("(min-width: 1024px)");
-  const reduce = useReduceMotion();
   const shown = Math.max(0, active);
   const current = AREAS[shown];
 
-  const select = (i: number) => setActive(!desktop && active === i ? -1 : i);
+  const change = (i: number) => {
+    if (i === active) return;
+    setPrev(shown);
+    setActive(i);
+    setOpened((o) => (o.includes(i) ? o : [...o, i]));
+  };
+  const select = (i: number) => {
+    if (!desktop && active === i) setActive(-1);
+    else change(i);
+  };
   const hover = (i: number) => {
-    if (desktop) setActive(i);
+    if (desktop) change(i);
   };
 
   return (
@@ -77,8 +94,8 @@ export function Areas() {
                     style={{ gridTemplateRows: i === active ? "1fr" : "0fr" }}
                   >
                     <div className="overflow-hidden">
-                      <div className="relative mb-5 aspect-[4/5] max-h-[70svh] w-full overflow-hidden">
-                        <Photo slot={practiceSlotId(area.slug)} sizes="100vw" tone="dark" />
+                      <div className="relative mb-5 aspect-[4/5] max-h-[70svh] w-full overflow-hidden bg-graphite">
+                        {opened.includes(i) ? photos.accordion[area.slug] : null}
                       </div>
                       <p className={`mb-8 max-w-[30rem] ${pendingClass(area.description) || "text-paper/85"}`}>
                         {area.description}
@@ -95,32 +112,26 @@ export function Areas() {
         <div className="hidden lg:col-span-4 lg:col-start-9 lg:block">
           <div className="sticky top-[calc(var(--nav-h)+32px)]">
             <div className="relative aspect-[4/5] w-full overflow-hidden bg-graphite">
-              <AnimatePresence initial={false}>
-                <m.div
-                  key={current.slug}
-                  className="absolute inset-0"
-                  initial={reduce ? { opacity: 0 } : { clipPath: "inset(0 0 100% 0)" }}
-                  animate={reduce ? { opacity: 1 } : { clipPath: "inset(0 0 0% 0)" }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: reduce ? 0.3 : 0.95, ease: EASE_INOUT }}
-                >
-                  <Photo slot={practiceSlotId(current.slug)} sizes="(min-width: 1024px) 33vw, 100vw" tone="dark" />
-                </m.div>
-              </AnimatePresence>
+              {prev !== null && prev !== shown && (
+                <div key={`anterior-${prev}`} className="absolute inset-0">
+                  {photos.panel[AREAS[prev].slug]}
+                </div>
+              )}
+              <div
+                key={`atual-${shown}`}
+                className={`absolute inset-0 ${prev !== null ? "wipe" : ""}`}
+                onAnimationEnd={() => setPrev(null)}
+              >
+                <div className="wipe-img absolute inset-0">{photos.panel[current.slug]}</div>
+              </div>
             </div>
             <div aria-live="polite" className="relative mt-6 min-h-[7.5rem] max-w-[28rem]">
-              <AnimatePresence mode="wait" initial={false}>
-                <m.p
-                  key={current.slug}
-                  className={pendingClass(current.description) || "text-paper/85"}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.45, ease: EASE }}
-                >
-                  {current.description}
-                </m.p>
-              </AnimatePresence>
+              <p
+                key={current.slug}
+                className={`fade-swap ${pendingClass(current.description) || "text-paper/85"}`}
+              >
+                {current.description}
+              </p>
             </div>
           </div>
         </div>

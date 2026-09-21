@@ -1,5 +1,3 @@
-"use client";
-
 import { OFFICE, pendingClass } from "@/lib/content";
 import { SITE } from "@/lib/site";
 import { Frame, Line, Reveal } from "./motion";

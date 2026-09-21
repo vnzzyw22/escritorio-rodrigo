@@ -12,7 +12,8 @@ npm run build && npm start
 
 Cada foto, a logo e o vídeo do hero têm um caminho fixo em `public/` (tabela completa na seção 10 do documento de direção). Solte o arquivo com o mesmo nome e **rode `npm run build`**: o servidor confere no build se o arquivo existe; se não existir, aparece uma moldura placeholder dizendo o que inserir.
 
-- Vídeo do hero: `public/media/hero/rodrigo-hero-desktop.mp4` e `rodrigo-hero-mobile.mp4` (vertical). Sem os arquivos, o hero usa o poster.
+- Vídeo do hero: `public/media/hero/rodrigo-hero-desktop.mp4` e `rodrigo-hero-mobile.mp4` (vertical). Sem os arquivos, o hero usa o poster. Use H.264 com `-movflags +faststart` e sem áudio; para loop contínuo, dissolva o fim no começo (receita no §19 do documento de direção).
+- Fotos: as variantes responsivas são geradas no `npm run dev` e no `npm run build` (`scripts/optimize-media.mjs`); trocar o arquivo mestre basta.
 - Logo: `public/images/logo/rodrigo-alan-dias.svg` (ou `.png`) e o símbolo `rodrigo-symbol.svg` (ou `.png`). Sem eles, a marca aparece como um lockup tipográfico neutro e o "R" grande é um glifo provisório.
 
 ## Conteúdo e chaves

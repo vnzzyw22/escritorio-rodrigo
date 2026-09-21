@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Libre_Caslon_Display, Libre_Caslon_Text, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
-import { resolveMedia } from "@/lib/media.server";
 import { SITE } from "@/lib/site";
 
 // Títulos: traço fino e claro, próximo ao lettering da marca. Não tem itálico (nunca sintetizar).
@@ -42,16 +41,15 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const media = await resolveMedia();
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className={`${display.variable} ${text.variable} ${sans.variable}`}>
       <body>
         <noscript>
           {/* Sem JavaScript, nada fica escondido esperando animação de entrada. */}
-          <style>{`[data-reveal]{opacity:1!important;transform:none!important;clip-path:none!important}`}</style>
+          <style>{`[data-reveal]{opacity:1!important;transform:none!important}[data-reveal]::after{display:none!important}`}</style>
         </noscript>
-        <Providers media={media}>{children}</Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

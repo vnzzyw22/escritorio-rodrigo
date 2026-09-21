@@ -1,27 +1,22 @@
-"use client";
-
-import { m, useTransform, type MotionValue } from "framer-motion";
 import { getImageProps } from "next/image";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import type { CSSProperties } from "react";
 import { HERO } from "@/lib/content";
+import { getMedia } from "@/lib/media.server";
 import { SITE } from "@/lib/site";
 import { RMark } from "./brand";
-import { useMediaQuery, useReduceMotion } from "./hooks";
-import { useSlot } from "./providers";
+import { HeroVideo } from "./hero-video";
 import { ButtonLink, TextLink } from "./ui";
 
-/* ------------------------------------------------------------------ */
-/* Mídia do hero: poster sempre (é o LCP); vídeo só depois, se permitido */
-/* ------------------------------------------------------------------ */
+const delay = (s: number) => ({ "--d": `${s}s` }) as CSSProperties;
 
-function HeroPoster() {
-  const desktop = useSlot("heroPoster");
-  const mobile = useSlot("heroPosterMobile");
-  const d = desktop.src ?? mobile.src;
-  const m = mobile.src ?? desktop.src;
+/** Poster sempre presente: é a imagem LCP. Arte-direção: recorte próprio para o celular. */
+async function HeroPoster() {
+  const media = await getMedia();
+  const d = media.heroPoster.src ?? media.heroPosterMobile.src;
+  const m = media.heroPosterMobile.src ?? media.heroPoster.src;
   if (!d || !m) return <div className="absolute inset-0 bg-graphite" />;
 
-  const common = { alt: "", fill: true, quality: 75 as const, sizes: "100vw" };
+  const common = { alt: "", fill: true, sizes: "100vw" };
   const { props: deskProps } = getImageProps({ ...common, src: d });
   const { props: mobProps } = getImageProps({ ...common, src: m });
 
@@ -36,107 +31,18 @@ function HeroPoster() {
         alt=""
         loading="eager"
         fetchPriority="high"
-        decoding="async"
         className="absolute inset-0 size-full object-cover md:[object-position:50%_55%]"
       />
     </picture>
   );
 }
 
-type NetworkInformation = { saveData?: boolean; effectiveType?: string };
-
 /**
- * Vídeo opcional. Não existe arquivo → não renderiza nada (o poster segue).
- * Só carrega depois do primeiro paint e só quando permitido: sem prefers-reduced-motion,
- * sem economia de dados e sem conexão 2g. Pausa fora da tela e com a aba escondida.
+ * Hero. Componente de servidor: o texto e a imagem chegam no HTML, sem esperar JavaScript.
+ * A "cortina" (a folha do statement cobrindo o hero) é CSS scroll-driven: ver .cv-* em globals.css.
  */
-function HeroVideo() {
-  const desktop = useSlot("heroVideoDesktop");
-  const mobile = useSlot("heroVideoMobile");
-  const isMobile = useMediaQuery("(max-width: 767px)");
-  const reduce = useReduceMotion();
-  // No celular só o vídeo vertical: nunca baixa o vídeo pesado de desktop.
-  const src = isMobile ? mobile.src : desktop.src;
-
-  const [allowed, setAllowed] = useState(false);
-  const [playing, setPlaying] = useState(false);
-  const ref = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (!src) return;
-    const conn = (navigator as Navigator & { connection?: NetworkInformation }).connection;
-    if (conn?.saveData || /(^|-)2g$/.test(conn?.effectiveType ?? "")) return;
-    const allow = () => setAllowed(true);
-    if (typeof window.requestIdleCallback === "function") {
-      const id = window.requestIdleCallback(allow, { timeout: 1500 });
-      return () => window.cancelIdleCallback(id);
-    }
-    // Safari não tem requestIdleCallback.
-    const id = setTimeout(allow, 600);
-    return () => clearTimeout(id);
-  }, [src]);
-
-  const active = Boolean(src) && allowed && !reduce;
-
-  useEffect(() => {
-    const video = ref.current;
-    if (!video || !active) return;
-    video.muted = true;
-    const io = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !document.hidden) void video.play().catch(() => {});
-      else video.pause();
-    });
-    io.observe(video);
-    const onVisibility = () => {
-      if (document.hidden) video.pause();
-    };
-    document.addEventListener("visibilitychange", onVisibility);
-    return () => {
-      io.disconnect();
-      document.removeEventListener("visibilitychange", onVisibility);
-    };
-  }, [active, src]);
-
-  if (!active || !src) return null;
-  return (
-    <video
-      key={src}
-      ref={ref}
-      src={src}
-      autoPlay
-      muted
-      loop
-      playsInline
-      preload="auto"
-      aria-hidden="true"
-      tabIndex={-1}
-      disablePictureInPicture
-      onLoadStart={() => setPlaying(false)}
-      onPlaying={() => setPlaying(true)}
-      onError={() => setPlaying(false)}
-      className={`absolute inset-0 size-full object-cover transition-opacity duration-[1400ms] md:[object-position:50%_55%] ${
-        playing ? "opacity-100" : "opacity-0"
-      }`}
-    />
-  );
-}
-
-/* ------------------------------------------------------------------ */
-
-const delay = (s: number) => ({ "--d": `${s}s` }) as CSSProperties;
-
-export function Hero({ progress }: { progress: MotionValue<number> }) {
-  const desktop = useMediaQuery("(min-width: 768px)");
-  const reduce = useReduceMotion();
-  const cover = desktop && !reduce; // a folha cobre o hero só onde ele é fixo
-
-  // À medida que a folha sobe, a imagem recua e escurece; o texto sai antes.
-  const mediaY = useTransform(progress, [0, 1], ["0%", "-4%"]);
-  const mediaScale = useTransform(progress, [0, 1], [1, 1.05]);
-  const veil = useTransform(progress, [0, 1], [0, 0.6]);
-  const textOpacity = useTransform(progress, [0, 0.55], [1, 0]);
-  const textY = useTransform(progress, [0, 1], ["0%", "-5%"]);
-
+export async function Hero() {
+  const media = await getMedia();
   return (
     <section
       id="inicio"
@@ -148,18 +54,15 @@ export function Hero({ progress }: { progress: MotionValue<number> }) {
     >
       {/* Mídia. Celular: bloco no topo. Desktop: fundo de tela cheia. */}
       <div className="relative h-[52svh] min-h-[360px] md:absolute md:inset-0 md:h-auto">
-        <m.div
-          className="absolute inset-0 origin-center"
-          style={cover ? { y: mediaY, scale: mediaScale } : undefined}
-        >
+        <div className="cv-media absolute inset-0 origin-center">
           <HeroPoster />
-          <HeroVideo />
-        </m.div>
+          <HeroVideo desktop={media.heroVideoDesktop.src} mobile={media.heroVideoMobile.src} />
+        </div>
         {/* Máscaras funcionais: garantem contraste do texto e do menu sobre a foto. */}
         <div className="absolute inset-x-0 top-0 h-44 bg-linear-to-b from-ink/85 via-ink/55 to-transparent" />
         <div className="absolute inset-0 hidden bg-ink/30 md:block" />
         <div className="absolute inset-x-0 bottom-0 hidden h-[64%] bg-linear-to-t from-ink/90 via-ink/45 to-transparent md:block" />
-        <m.div className="absolute inset-0 bg-ink" style={{ opacity: cover ? veil : 0 }} />
+        <div className="cv-veil absolute inset-0 bg-ink opacity-0" />
       </div>
 
       {/* A opacidade fica no contêiner: a animação de entrada termina em opacity 1 e a sobrescreveria. */}
@@ -173,10 +76,7 @@ export function Hero({ progress }: { progress: MotionValue<number> }) {
       </div>
 
       {/* Texto. Celular: abaixo da foto, sobre ink. Desktop: sobre a base da imagem. */}
-      <m.div
-        className="page-x relative flex flex-col pb-8 pt-10 md:absolute md:inset-0 md:pb-[clamp(24px,4.5vh,52px)] md:pt-[var(--nav-h)]"
-        style={cover ? { opacity: textOpacity, y: textY } : undefined}
-      >
+      <div className="cv-text page-x relative flex flex-col pb-8 pt-10 md:absolute md:inset-0 md:pb-[clamp(24px,4.5vh,52px)] md:pt-[var(--nav-h)]">
         <div className="grid-12 items-end gap-y-8 md:mt-auto">
           <h1 className="text-display-xl col-span-12 lg:col-span-7">
             {HERO.headline.map((line, i) => (
@@ -213,7 +113,7 @@ export function Hero({ progress }: { progress: MotionValue<number> }) {
             {SITE.address.city} — {SITE.address.state}
           </span>
         </div>
-      </m.div>
+      </div>
     </section>
   );
 }

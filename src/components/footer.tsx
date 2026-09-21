@@ -1,5 +1,3 @@
-"use client";
-
 import { FOOTER, NAV, pendingClass } from "@/lib/content";
 import { TEL_URL } from "@/lib/contact";
 import { SITE } from "@/lib/site";

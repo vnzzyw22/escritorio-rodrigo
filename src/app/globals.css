@@ -221,12 +221,233 @@
   color: var(--paper);
 }
 
+/* Cor da "cortina" que recolhe sobre as fotos: a mesma do fundo da seção. */
+:root {
+  --cover: var(--paper);
+}
+.dark-surface {
+  --cover: var(--ink);
+}
+.cover-deep {
+  --cover: var(--paper-deep);
+}
+
+/* ---------- Revelações de entrada (acionadas por data-shown; ver reveal-observer.tsx) ----------
+   Só transform e opacidade: rodam no compositor, sem trabalho de JavaScript por quadro. */
+.rv-line {
+  display: block;
+  transform: translateY(108%);
+  transition: transform 1.15s var(--ease) var(--d, 0s);
+}
+.rv-line[data-shown] {
+  transform: none;
+}
+.rv-fade {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 1s var(--ease) var(--d, 0s),
+    transform 1s var(--ease) var(--d, 0s);
+}
+.rv-fade[data-shown] {
+  opacity: 1;
+  transform: none;
+}
+.rv-curtain {
+  position: relative;
+  overflow: hidden;
+}
+.rv-curtain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: var(--cover);
+  transform-origin: bottom;
+  pointer-events: none;
+  transition: transform 1.4s var(--ease-inout) var(--d, 0s);
+}
+.rv-curtain[data-shown]::after {
+  transform: scaleY(0);
+}
+
+/* ---------- Parallax e cortina do hero: CSS scroll-driven (compositor) ----------
+   Só em telas largas com mouse. Sem suporte ao navegador, tudo fica parado (sem quebrar). */
+.parallax {
+  position: absolute;
+  inset: 0;
+}
+@keyframes parallax {
+  from {
+    transform: translateY(calc(var(--pr, 6%) * -1));
+  }
+  to {
+    transform: translateY(var(--pr, 6%));
+  }
+}
+@keyframes stmt-mark {
+  from {
+    transform: translateY(-14%);
+  }
+  to {
+    transform: translateY(14%);
+  }
+}
+@keyframes cv-media {
+  to {
+    transform: translateY(-4%) scale(1.05);
+  }
+}
+@keyframes cv-veil {
+  to {
+    opacity: 0.6;
+  }
+}
+@keyframes cv-text {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  55% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-5%);
+  }
+}
+@keyframes rail-fill {
+  to {
+    transform: scaleY(1);
+  }
+}
+.rail-fill {
+  transform: scaleY(0);
+}
+
+@supports (animation-timeline: view()) {
+  @media (min-width: 1024px) and (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .parallax {
+      inset: -8%;
+      animation: parallax linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+  }
+  @media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+    /* A folha do statement sobe sobre o hero: mídia recua, escurece e o texto sai antes. */
+    .opening {
+      timeline-scope: --stmt;
+    }
+    .stmt {
+      view-timeline: --stmt block;
+    }
+    .cv-media {
+      animation: cv-media linear both;
+      animation-timeline: --stmt;
+      animation-range: entry;
+    }
+    .cv-veil {
+      animation: cv-veil linear both;
+      animation-timeline: --stmt;
+      animation-range: entry;
+    }
+    .cv-text {
+      animation: cv-text linear both;
+      animation-timeline: --stmt;
+      animation-range: entry;
+    }
+    .stmt-mark {
+      animation: stmt-mark linear both;
+      animation-timeline: --stmt;
+      animation-range: cover;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .rail-fill {
+      animation: rail-fill linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+}
+
+/* ---------- Painel das Áreas (desktop): a foto nova "desce" por cima da anterior ---------- */
+@keyframes wipe-in {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes wipe-img {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+.wipe {
+  overflow: hidden;
+  animation: wipe-in 0.95s var(--ease-inout) both;
+}
+.wipe > .wipe-img {
+  animation: wipe-img 0.95s var(--ease-inout) both;
+}
+.fade-swap {
+  animation: fade-up 0.45s var(--ease) both;
+}
+
+/* ---------- Menu do celular ---------- */
+.menu-in {
+  animation: fade-in 0.4s var(--ease) both;
+}
+.menu-out {
+  animation: fade-out 0.3s var(--ease) both;
+}
+.menu-link {
+  animation: fade-up 0.7s var(--ease) both;
+  animation-delay: calc(0.08s + var(--i, 0) * 0.05s);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
   .rise,
-  .fade-in {
+  .fade-in,
+  .wipe,
+  .wipe > .wipe-img,
+  .fade-swap,
+  .menu-in,
+  .menu-out,
+  .menu-link {
     animation: none;
+  }
+  /* Sem movimento: tudo já aparece no estado final. */
+  .rv-line,
+  .rv-fade {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .rv-curtain::after {
+    display: none;
   }
 }

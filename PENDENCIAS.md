@@ -32,7 +32,7 @@ Hoje aparecem como `[X A CONFIRMAR]`. Editar em `src/lib/content.ts`.
 
 ## 4. Mídia
 
-- [ ] **Vídeo do hero:** `public/media/hero/rodrigo-hero-desktop.mp4` (16:9, 1920×1080) e `rodrigo-hero-mobile.mp4` (vertical 9:16). H.264, sem áudio, `+faststart`, de 8 a 12 s em loop, desktop até 8 MB e mobile até 3 MB. Ao chegar, trocar os posters por um quadro do vídeo. Sem vídeo, o hero usa o poster.
+- [x] **Vídeo do hero** entregue e processado (desktop 1,3 MB e celular vertical 0,45 MB, sem áudio, faststart, loop contínuo). Original em `assets-originais/hero/video-hero.mp4`. Falta: o Rodrigo aprovar o vídeo; o arquivo é 720p (pode ficar macio em telas grandes: pedir 1080p); o loop usa uma dissolve de 1 s e o recorte vertical foi tirado do mesmo vídeo (uma versão gravada na vertical seria melhor).
 - [ ] **Fotos reais** no lugar das provisórias (lista do que fotografar no §9 do documento de direção). As atuais têm aparência de imagem gerada.
   - Áreas: textos embutidos nas imagens ("BANK" na 3, placa "DEFESA MÉDICA" na 4), aperto de mão na 1, prédio de colunas e chave fundida a uma engrenagem na 5. Resolução de 944×1104.
   - Contato: `contact-01` mostra uma estatueta da Justiça.
@@ -53,7 +53,7 @@ Hoje aparecem como `[X A CONFIRMAR]`. Editar em `src/lib/content.ts`.
 
 ## 6. Técnico
 
-- [ ] **Desempenho no celular lento:** no cenário mais pessimista (rede 4G lenta com CPU 4x mais fraca) o TBT é de ~1,1 s (LCP 1,7 s, CLS 0). Cerca de 0,65 s vêm das três famílias de fonte. Opções no §18 do documento de direção: reduzir para duas famílias ou aplicar `content-visibility` nas seções abaixo da dobra.
+- [ ] **Desempenho:** otimizado em 2026-09-21 (§19 do documento de direção): thread principal na rolagem de 66% para 40% (celular CPU 4x), pior quadro de 231 para 33 ms. Sobra o LCP simulado do Lighthouse no celular (~3,1 s), que não mudou, e o custo das três famílias de fonte (opção: reduzir para duas). Publicar de novo na Vercel para o site no ar receber as melhorias.
 - [ ] O build avisa que várias imagens estão abaixo da resolução mínima recomendada. É informativo; some quando chegarem as fotos reais.
 - [ ] O servidor de desenvolvimento trava arquivos de imagem no Windows: para trocar uma foto já servida, pare o `npm run dev`, troque o arquivo e suba de novo.
 
