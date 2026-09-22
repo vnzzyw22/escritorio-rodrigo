@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Wordmark } from "@/components/brand";
-import { PRIVACY } from "@/lib/content";
+import { FOOTER, PROFESSIONAL, PRIVACY, pendingClass } from "@/lib/content";
 import { SITE } from "@/lib/site";
 import { TEL_URL } from "@/lib/contact";
 
@@ -66,7 +66,8 @@ export default function Privacidade() {
 
             <Section id="controlador" title="Quem é o responsável">
               <p>
-                <strong className="font-normal">{SITE.name}</strong>, de Rodrigo Alan Dias, advogado inscrito na OAB/PR 90.980.
+                <strong className="font-normal">{SITE.name}</strong>, de {PROFESSIONAL.name.join(" ")}, advogado inscrito na OAB{" "}
+                <span className={pendingClass(FOOTER.oab)}>{FOOTER.oab}</span>.
                 <br />
                 {A.street}, {A.district}, {A.city} — {A.state}, CEP {A.zip}.
                 <br />
@@ -86,7 +87,7 @@ export default function Privacidade() {
                 site, sem chamar o Google Fonts.
               </p>
               <p>
-                Ao tocar em um link que sai do site (WhatsApp, Google Maps, avaliações no Google, Facebook), você passa a usar o
+                Ao tocar em um link que sai do site (WhatsApp, Google Maps, avaliações no Google), você passa a usar o
                 serviço de outra empresa, que pode usar cookies próprios e tem política própria. O site também não carrega nada
                 dessas empresas antes de você tocar no link.
               </p>

@@ -3,7 +3,7 @@ import { TEL_URL } from "@/lib/contact";
 import { SITE } from "@/lib/site";
 import { RMark, Wordmark } from "./brand";
 
-/** Rodapé institucional e minimalista. O R aparece grande, cortado e quase invisível. */
+/** Rodapé institucional e minimalista. A inicial da marca aparece grande, cortada e quase invisível. */
 export function Footer() {
   const a = SITE.address;
   return (
@@ -48,11 +48,13 @@ export function Footer() {
           <div className="col-span-6 md:col-span-3">
             <p className="label text-stone">Inscrição na OAB</p>
             <p className={`mt-2 ${pendingClass(FOOTER.oab)}`}>{FOOTER.oab}</p>
-            <p className="mt-6">
-              <a href={SITE.links.facebook} target="_blank" rel="noopener noreferrer" className="label link-u hit">
-                Facebook
-              </a>
-            </p>
+            {SITE.links.facebook && (
+              <p className="mt-6">
+                <a href={SITE.links.facebook} target="_blank" rel="noopener noreferrer" className="label link-u hit">
+                  Facebook
+                </a>
+              </p>
+            )}
             <p className="mt-6">
               <a href="/privacidade" className="label link-u hit">
                 Privacidade e cookies

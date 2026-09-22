@@ -43,12 +43,12 @@ export const metadata: Metadata = {
     locale: "pt_BR",
     siteName: SITE.name,
     title: `${SITE.name} — ${SITE.address.city}, ${SITE.address.state}`,
-    description: "Direito exige clareza. Advocacia em Sarandi, na região metropolitana de Maringá.",
+    description: "Direito exige clareza. Advocacia em Maringá (PR).",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0e0e0d",
+  themeColor: "#16110d",
   viewportFit: "cover",
 };
 

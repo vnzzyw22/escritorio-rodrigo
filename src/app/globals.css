@@ -1,15 +1,20 @@
 @import "tailwindcss";
 
-/* Tokens — ver LAW-FIRM-DESIGN-DIRECTION.md. Nenhuma cor ou fonte solta nos componentes. */
+/*
+ * Tokens — ver LAW-FIRM-DESIGN-DIRECTION.md. Nenhuma cor ou fonte solta nos componentes.
+ * Paleta migrada em 2026-09-22, para Vasconcelos: mesma estrutura de tokens do projeto anterior
+ * (Contemporary Legal Editorial), com o matiz neutro girado para um café/terra discreto — evolução,
+ * não um site marrom. Luminância de cada token preservada perto do valor anterior (contraste já testado).
+ */
 :root {
-  --ink: #0e0e0d;
-  --graphite: #1d1e1c;
-  --graphite-line: #33342f;
-  --stone: #8e897f;
-  --ash: #5d594f;
-  --paper: #f1ede4;
-  --paper-deep: #e7e1d4;
-  --paper-line: #cfc8b8;
+  --ink: #16110d;
+  --graphite: #251c15;
+  --graphite-line: #3d2f23;
+  --stone: #9c8d78;
+  --ash: #6b5a46;
+  --paper: #f5ede0;
+  --paper-deep: #ebe0c9;
+  --paper-line: #d9cbb0;
   --white: #ffffff;
   --bronze: #8f7248;
   --bronze-light: #b79b6b;

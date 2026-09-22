@@ -10,18 +10,20 @@ web
 
 Next.js 16 (App Router) + TypeScript + Tailwind CSS 4 + framer-motion. Proposto na auditoria de 2026-09-20 e aprovado pelo usuário ("Sim"). Sem backend: contato por telefone e WhatsApp (link `wa.me`). Sem deploy nem push remoto sem pedido explícito.
 
+**Adaptado em 2026-09-22** (branch `vasconcelos`, não publicado): era o site-conceito da Advocacia Rodrigo Alan Dias; o cliente não seguiu adiante e o usuário pediu para reaproveitar estrutura, direção visual, componentes e vídeos para um novo cliente, Vasconcelos — Escritório de Advocacia. Todo dado real do Rodrigo (endereço, telefone, OAB, avaliações, logo, retrato) foi removido; nada do que falta para o Vasconcelos foi inventado no lugar (ver `PENDENCIAS.md`). As seções abaixo descrevem o projeto **como ele é hoje, para o Vasconcelos**; o histórico do Rodrigo fica registrado em `LAW-FIRM-DESIGN-DIRECTION.md` e no git.
+
 ## Users
 
-- **Primeiro público:** o advogado Rodrigo Alan Dias. Este site é um conceito comercial apresentado a ele para que enxergue o valor de um site próprio de alto nível.
-- **Público final do site:** pessoas e empresas de Sarandi (PR) e região que precisam de orientação jurídica e avaliam o escritório antes de entrar em contato, quase sempre pelo celular. Situação: decisão importante, pouca familiaridade com o Direito, necessidade de clareza e confiança.
+- **Primeiro público:** o advogado Michael Vasconcelos. Este site é uma proposta visual rápida, para ele avaliar o potencial do projeto (reaproveitado de um site-conceito anterior, para outro escritório).
+- **Público final do site:** pessoas e empresas de Maringá (PR) e região que precisam de orientação jurídica e avaliam o escritório antes de entrar em contato, quase sempre pelo celular. Situação: decisão importante, pouca familiaridade com o Direito, necessidade de clareza e confiança.
 
 ## Product Purpose
 
-Apresentar a Advocacia Rodrigo Alan Dias com sobriedade e sofisticação, transmitindo autoridade, precisão e proximidade, e levar o visitante a um contato simples (ligação ou WhatsApp). Sucesso, para o pitch: o Rodrigo vê o próprio escritório de forma mais sofisticada e quer o site. Sucesso, para o site final: visitante entende quem é o escritório e entra em contato.
+Apresentar o Vasconcelos — Escritório de Advocacia com sobriedade e sofisticação, transmitindo autoridade, precisão e proximidade, e levar o visitante a um contato simples (ligação ou WhatsApp). Sucesso, para a proposta: o Dr. Vasconcelos vê o potencial do site e quer seguir adiante. Sucesso, para o site final: visitante entende quem é o escritório e entra em contato.
 
 ## Positioning
 
-Escritório real de Sarandi (PR), com identidade visual clássica própria (símbolo em R, círculo, ramo de louro), avaliado 5,0 no Google por 426 pessoas. Tradição reinterpretada em linguagem editorial contemporânea, sem os clichês do "site de advogado".
+Escritório de Maringá (PR), avaliado 5,0 no Google por 26 pessoas (nota e contagem informadas pelo usuário; sem os textos das avaliações). **Sem identidade visual própria confirmada ainda**: o site usa só um lockup tipográfico ("Vasconcelos" + "Escritório de Advocacia"), nunca um símbolo inventado. Tradição reinterpretada em linguagem editorial contemporânea, sem os clichês do "site de advogado".
 
 ## Operating Context
 
@@ -29,33 +31,30 @@ Publicidade da advocacia no Brasil é regida pelo Estatuto da Advocacia, pelo C�
 
 ## Capabilities and Constraints
 
-Fatos confirmados pelo usuário:
+Fatos confirmados pelo usuário (2026-09-22):
 
-- Nome: Advocacia Rodrigo Alan Dias.
-- Endereço: Av. Maringá, 1441, Jardim Nova Paulista, Sarandi, PR, 87111-000.
-- Telefone: (44) 99807-4406.
-- Google: 5,0 estrelas, 426 avaliações.
-- Facebook: https://www.facebook.com/Adv.RodrigoAlanDias/
+- Nome: Vasconcelos — Escritório de Advocacia. Advogado: Michael Vasconcelos.
+- Endereço: Av. Carlos Correa Borges, 597, Zona 05, Maringá, PR (CEP não informado).
+- Google: 5,0 estrelas, 26 avaliações (sem os textos).
+- Áreas de atuação, com os pontos informados no briefing (não expandir além disso): Direito Administrativo (processos administrativos, defesa de servidores públicos, suporte jurídico integral a servidores públicos); Direito Bancário (análise de contratos financeiros, revisão contratual, defesa de devedores, cláusulas abusivas); Direito Imobiliário (regularização fundiária, contratos de compra e venda, posse, propriedade). Atuação consultiva, preventiva e contenciosa.
 
-Áreas de atuação: cinco **exemplos** (marcados "Ex:" no briefing de 2026-09-20) foram redigidos e estão no site: Direito do Trabalho, Cível e Contratos, Direito do Consumidor, Defesa Médica e Planejamento Patrimonial. **Não foram confirmados pelo Rodrigo** e precisam ser validados ou trocados antes de qualquer uso real.
+Decisões em aberto (usar placeholder visível, nunca preencher com texto fictício): telefone/WhatsApp (**crítico**: os botões de contato não funcionam de verdade sem ele), CEP, OAB, formação, texto de apresentação, horário de atendimento, Facebook/Instagram, logo real, fotos reais (escritório, áreas, retrato).
 
-Decisões em aberto (usar placeholder visível, nunca preencher com texto fictício): formação, anos de atuação, descrição do escritório, texto de apresentação, horário de atendimento, artigos e publicações, Instagram (achado em busca pública, não confirmado), aviso institucional, vídeo final do hero.
-
-Informados pelo usuário em 2026-09-20 (não conferidos no cadastro da OAB, que exige captcha): inscrição **OAB/PR 90.980**; atuação "predominante no Paraná, com escritório na região metropolitana de Maringá"; (44) 99807-4406 como número de atendimento e WhatsApp. O texto do usuário citava o bairro "Centro"; mantido "Jardim Nova Paulista" (brief original e diretórios) até confirmação.
+**Nunca reaproveitar do cliente anterior** (Advocacia Rodrigo Alan Dias): telefone, endereço, OAB, avaliações reais de clientes dele, retrato, logo/símbolo. Ver `PENDENCIAS.md` §1 para o que foi removido e por quê.
 
 ## Brand Commitments
 
-- A logo fornecida pelo cliente é a fonte principal de identidade: símbolo em R, composição circular, ramo de louro, tipografia serifada, preto/grafite e off-white. Não redesenhar, não alterar proporções, não inventar marca. **O arquivo da logo ainda não foi enviado** (o usuário disse que não vai enviar por enquanto): o site usa um slot em `public/images/logo/` com fallback tipográfico neutro.
-- Paleta: preto profundo, grafite, off-white quente, cinza pedra, branco, bronze muito discreto (nunca dominante).
-- Direção pinada pelo usuário: **Contemporary Legal Editorial**. Referências (Lexora, Lincoln Costa) valem só como princípios, nunca como cópia. Lexora contribui com hierarquia limpa; Lincoln Costa, com estrutura e conversão.
-- Proibido pelo brief: template de advogado, cassino preto e dourado, três cards, glassmorphism, gradiente roxo/azul, pill em toda parte, Inter/Poppins/Montserrat/Roboto automáticos, balança e martelo decorativos, "trusted by", métricas, depoimentos e resultados inventados, promessa de resultado.
+- **Sem logo confirmada do Vasconcelos.** Não inventar símbolo, slogan, história ou cores oficiais. Até chegar um arquivo real, o site usa só um lockup tipográfico discreto ("VASCONCELOS" / "ESCRITÓRIO DE ADVOCACIA"), reaproveitando o mesmo slot vazio (`public/images/logo/`) e o mesmo fallback do projeto anterior — nunca o símbolo do Rodrigo (círculo, R, louro), que é a identidade real de outro escritório.
+- Paleta: migrada em 2026-09-22 para tons terrosos/café discretos (evolução do neutro anterior, não um "site marrom" — ver `LAW-FIRM-DESIGN-DIRECTION.md`), mesma estrutura de tokens.
+- Direção mantida do projeto anterior: **Contemporary Legal Editorial** — sofisticada, cinematográfica, editorial, tipografia forte, vídeo integrado ao hero, movimento sutil.
+- Proibido: template de advogado, cassino preto e dourado, três cards, glassmorphism, gradiente roxo/azul, pill em toda parte, Inter/Poppins/Montserrat/Roboto automáticos, balança e martelo decorativos, "trusted by", métricas, depoimentos e resultados inventados, promessa de resultado, dourado excessivo, aparência de imobiliária ou banco.
 
 ## Evidence on Hand
 
-- `public/media/hero/rodrigo-hero-poster.webp`: derivado de `foto-hero.png` (2752×1536, escritório de nogueira, livros, cadernos, balança de latão ao fundo, homem de terno de costas). Aparência de imagem gerada; o homem não é identificado como o Rodrigo.
-- Agregado do Google: 5,0 e 426 avaliações (informado pelo usuário).
-- Fotos provisórias enviadas pelo cliente (2026-09-20): cinco das áreas, recepção, livro, escritório e um retrato de 928×1062 (versão melhorada por IA de uma foto pequena, com a marca visível do gerador recortada). Aparência de imagem gerada; ver `LAW-FIRM-DESIGN-DIRECTION.md` §9.
-- **Não existem e não devem ser fabricados:** depoimentos, casos, resultados, números de causas, valores, fotos reais do escritório, vídeo final.
+- Vídeo e fotos do hero: os mesmos do projeto anterior, mantidos sem alteração a pedido do usuário (cena de livro de Direito Civil e balança sobre mesa, entardecer). Aparência de imagem/vídeo gerado; não identificam nenhuma pessoa.
+- Agregado do Google: 5,0 e 26 avaliações (informado pelo usuário; sem os textos).
+- Fotos de área, escritório e contato: as mesmas fotos provisórias do projeto anterior (aparência de imagem gerada), reaproveitadas só onde não mostram texto ou pessoa de outro contexto; ver `PENDENCIAS.md` §2.
+- **Não existem e não devem ser fabricados:** depoimentos, casos, resultados, números de causas, valores, fotos reais do escritório ou do advogado, anos de experiência, formação, OAB, telefone.
 
 ## Product Principles
 

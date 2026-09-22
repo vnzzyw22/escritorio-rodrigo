@@ -1,4 +1,5 @@
 import { AREAS } from "./content";
+import { SITE } from "./site";
 
 /**
  * Manifesto de mídia: cada slot tem caminhos previsíveis dentro de `public/`.
@@ -35,18 +36,18 @@ export const practiceSlotId = (slug: string) => `practice:${slug}`;
 export const SLOT_DEFS: SlotDef[] = [
   {
     id: "logo",
-    files: ["images/logo/rodrigo-alan-dias.svg", "images/logo/rodrigo-alan-dias.png"],
+    files: ["images/logo/logo.svg", "images/logo/logo.png"],
     ratio: "auto",
     minWidth: 800,
     label: "Logo completa",
-    alt: "Advocacia Rodrigo Alan Dias",
+    alt: SITE.name,
   },
   {
     id: "symbol",
-    files: ["images/logo/rodrigo-symbol.svg", "images/logo/rodrigo-symbol.png"],
+    files: ["images/logo/symbol.svg", "images/logo/symbol.png"],
     ratio: "1/1",
     minWidth: 2000,
-    label: "Símbolo R",
+    label: "Símbolo",
     alt: "",
   },
   {
@@ -97,15 +98,15 @@ export const SLOT_DEFS: SlotDef[] = [
     ratio: "4/5",
     minWidth: 1400,
     label: "Escritório — detalhe",
-    alt: "Detalhe do escritório",
+    alt: `${SITE.person} no escritório`,
   },
   {
     id: "lawyer",
-    files: ["images/lawyer/rodrigo-01.webp"],
+    files: ["images/lawyer/retrato.webp"],
     ratio: "4/5",
     minWidth: 1600,
-    label: "Retrato — Rodrigo Alan Dias",
-    alt: "Retrato de Rodrigo Alan Dias",
+    label: `Retrato — ${SITE.person}`,
+    alt: `Retrato de ${SITE.person}`,
     position: "50% 30%",
   },
   {

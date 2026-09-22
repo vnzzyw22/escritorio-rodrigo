@@ -73,14 +73,16 @@ export function Contact() {
                 <dt className="label text-ash">Atendimento</dt>
                 <dd className={`mt-2 ${pendingClass(CONTACT.hours)}`}>{CONTACT.hours}</dd>
               </div>
-              <div className="py-4">
-                <dt className="label text-ash">Redes</dt>
-                <dd className="mt-2">
-                  <a href={SITE.links.facebook} target="_blank" rel="noopener noreferrer" className="link-u hit">
-                    Facebook
-                  </a>
-                </dd>
-              </div>
+              {SITE.links.facebook && (
+                <div className="py-4">
+                  <dt className="label text-ash">Redes</dt>
+                  <dd className="mt-2">
+                    <a href={SITE.links.facebook} target="_blank" rel="noopener noreferrer" className="link-u hit">
+                      Facebook
+                    </a>
+                  </dd>
+                </div>
+              )}
             </dl>
           </Reveal>
           <Frame slot="contact" sizes="(min-width: 1024px) 30vw, 100vw" range={5} tone="dark" mobileRatio="4/3" />
