@@ -57,7 +57,7 @@ Hoje aparecem como `[X A CONFIRMAR]`. Editar em `src/lib/content.ts`.
 - [x] **Segurança** (2026-09-21): cabeçalhos em `next.config.ts` (CSP restritiva a `self`, nosniff, X-Frame-Options DENY, Referrer-Policy, Permissions-Policy, HSTS, COOP), `poweredByHeader` desligado, links externos com `noopener noreferrer`, `npm audit` sem vulnerabilidades, lint limpo. Testado no Chrome: nenhuma violação de CSP com vídeo, fontes, abas e carrossel funcionando.
 - [ ] Ao publicar de verdade: `sitemap`, canonical, JSON-LD (LegalService) e og:image com o nome, quando houver domínio.
 - [ ] **Repositório GitHub público** (`vnzzyw22/escritorio-rodrigo`): decidir se deve ser privado, porque contém as fotos provisórias, o retrato e os dados do escritório.
-- [ ] **Conectar a Vercel ao GitHub** para publicar sozinho a cada `git push`. A conexão automática falhou por falta de autorização do app da Vercel no GitHub: Vercel > projeto `escritorio-rodrigo` > Settings > Git > Connect. Enquanto isso, publicar com `npx vercel --prod --yes` na pasta do projeto.
+- [x] **Vercel conectada ao GitHub** (confirmado em 2026-09-21): cada `git push` na `main` gera um deploy de produção sozinho. Testado com dois commits vazios, sem rodar `vercel`.
 
 ## 6. Técnico
 
