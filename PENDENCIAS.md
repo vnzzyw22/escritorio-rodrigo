@@ -7,16 +7,15 @@ cliente, Vasconcelos — Escritório de Advocacia (Maringá, PR).** A adaptaçã
 ver §Objetivo. Nada do que faltava foi inventado: ver §1. Detalhes técnicos da adaptação em
 `LAW-FIRM-DESIGN-DIRECTION.md` (registro de decisões, no fim).
 
-## 0. Antes de qualquer coisa: decisão do usuário
+## 0. Onde está publicado
 
-- [ ] **Onde publicar.** O repositório GitHub (`vnzzyw22/escritorio-rodrigo`) é **público** e a Vercel está
-  conectada a ele: qualquer `git push` na `main` publica sozinho em `escritorio-rodrigo.vercel.app`, o
-  mesmo endereço que já foi mostrado como proposta ao Rodrigo. Por isso esta adaptação ficou em um branch
-  à parte (`vasconcelos`), sem *merge* nem *push*. Antes de publicar de verdade, decidir: (a) um repositório
-  e projeto Vercel **novos**, com nome do Vasconcelos, ou (b) reaproveitar este mesmo repositório e projeto,
-  cientes de que o histórico do git guarda os dados do Rodrigo (nome, endereço, telefone, OAB e as 4
-  avaliações reais de clientes dele) e de que o nome do repositório e da URL continuam dizendo
-  "escritorio-rodrigo". Nenhuma opção foi executada.
+- [x] **Decisão do usuário (2026-09-22): reaproveitar o mesmo repositório e projeto Vercel.** O repositório
+  GitHub (`vnzzyw22/escritorio-rodrigo`) é **público** e a Vercel está conectada a ele: todo `git push` na
+  `main` publica sozinho em `escritorio-rodrigo.vercel.app`. Esse é o mesmo endereço que já foi mostrado
+  como proposta ao Rodrigo; a partir desta publicação, a `main` passa a mostrar o Vasconcelos. **O
+  histórico do git continua guardando os dados do Rodrigo** (nome, endereço, telefone, OAB, as 4 avaliações
+  reais de clientes dele) — não visível no site publicado, mas recuperável por quem tiver acesso ao
+  repositório. O nome do repositório e do projeto Vercel continuam dizendo "escritorio-rodrigo".
 
 ## 1. O que foi removido, e por quê
 
@@ -35,14 +34,20 @@ Nada do cliente anterior foi reaproveitado como se fosse do Vasconcelos:
 
 ## 2. Antes de mostrar ao Dr. Vasconcelos
 
-- [ ] **Telefone/WhatsApp.** Não foi informado. Aparece como `[TELEFONE A CONFIRMAR]` em todos os botões de
-  contato (cabeçalho, barra do celular, formulário, rodapé). Editar `SITE.phone` em `src/lib/site.ts`
-  (`display`, `e164`, `wa`). **Sem o número real, ninguém consegue de fato entrar em contato pelo site.**
+- [x] **Telefone/WhatsApp** confirmado pelo usuário em 2026-09-22: (44) 99154-1714. Aplicado em `SITE.phone`
+  (`display`, `e164`, `wa`) em `src/lib/site.ts`; todos os botões de contato (cabeçalho, barra do celular,
+  formulário, rodapé) já usam o número real.
 - [ ] **Logo real**, se existir (vetor de preferência). Sem ela, o site usa só o lockup tipográfico.
-- [ ] **Fotos reais do escritório, das áreas e do Dr. Vasconcelos.** Todas as fotos atuais são as mesmas
-  provisórias do projeto anterior (aparência de imagem gerada), reaproveitadas por serem genéricas o
-  bastante (mesa, contrato, prédio) — nenhuma mostra uma pessoa real nem texto específico de outro
-  escritório. O retrato profissional está vazio (moldura "Foto a inserir").
+- [x] **Retrato do Dr. Michael Vasconcelos** adicionado em 2026-09-22 (duas fotos fornecidas pelo usuário):
+  o retrato vertical (terno cinza) foi para o slot `lawyer` (`public/images/lawyer/retrato.webp`, seção
+  Profissional); a foto horizontal (terno azul, meio corpo) foi para o detalhe do Escritório
+  (`public/images/office/office-02.webp`, no lugar da foto genérica de café e caderno). Originais
+  preservados em `assets-originais/lawyer/` (fora do git). **Ainda sem confirmação visual num navegador
+  real** (ver nota no fim deste arquivo) — conferir o recorte das duas fotos (a de `office-02` é bem mais
+  larga que o quadro 4:5 do slot e é cortada nas laterais).
+- [ ] **Fotos reais do escritório e das áreas.** Continuam as mesmas provisórias do projeto anterior
+  (aparência de imagem gerada), reaproveitadas por serem genéricas o bastante (mesa, contrato, prédio) —
+  nenhuma mostra pessoa nem texto específico de outro escritório.
 - [ ] **Duas fotos das áreas ficaram de fora**, porque têm texto errado gravado na imagem: uma diz "DEFESA
   MÉDICA" e a outra tem um prédio com a palavra "BANK" na fachada. Arquivos preservados, sem uso, em
   `public/images/practice/area-03.webp` e `area-04.webp`.
@@ -85,13 +90,18 @@ Hoje aparecem como `[X A CONFIRMAR]`. Editar em `src/lib/content.ts` e `src/lib/
 - [ ] O servidor de desenvolvimento trava arquivos de imagem no Windows: para trocar uma foto já servida,
   pare o `npm run dev`, troque o arquivo e suba de novo.
 
-## No branch `vasconcelos` (não publicado)
+## No branch `vasconcelos`
 
-Feito nesta adaptação (2026-09-22), tudo verificado no navegador (desktop 1440 e celular 390, sem rolagem
-horizontal) e com `tsc`, `eslint` e `next build` limpos:
+Feito nesta adaptação (2026-09-22). A primeira leva (dados do cliente, 3 áreas, paleta, logo/símbolo) foi
+verificada no navegador (desktop 1440 e celular 390, sem rolagem horizontal). **A segunda leva (telefone
+real e as duas fotos do Dr. Vasconcelos) só foi verificada por `tsc`, `eslint`, `next build` e inspeção
+direta dos arquivos de imagem — o Chrome DevTools MCP caiu no meio da checagem visual e não reconectou a
+tempo.** Vale abrir o site publicado e conferir o recorte das duas fotos novas antes de mostrar ao Dr.
+Vasconcelos.
 
-- Nome, endereço, avaliações (nota + contagem, sem citação), telefone (placeholder seguro, não o número do
-  Rodrigo) e OAB (placeholder) trocados em `src/lib/site.ts`.
+- Nome, endereço, avaliações (nota + contagem, sem citação), telefone real e OAB (placeholder) trocados em
+  `src/lib/site.ts`.
+- Retrato do Dr. Vasconcelos e uma segunda foto dele no detalhe do Escritório (ver §2).
 - Três áreas de atuação reais (Administrativo, Bancário, Imobiliário), com fotos e descrições próprias.
 - Seção "Primeira conversa" com listas de documentos reescritas para as três novas áreas.
 - Profissional: nome "Michael Vasconcelos"; formação, OAB e apresentação como pendentes; retrato removido

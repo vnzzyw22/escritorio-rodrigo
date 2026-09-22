@@ -98,7 +98,7 @@ export const SLOT_DEFS: SlotDef[] = [
     ratio: "4/5",
     minWidth: 1400,
     label: "Escritório — detalhe",
-    alt: "Detalhe do escritório",
+    alt: `${SITE.person} no escritório`,
   },
   {
     id: "lawyer",

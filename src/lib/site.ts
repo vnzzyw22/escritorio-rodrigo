@@ -23,15 +23,11 @@ export const SITE = {
     /** Não informado. */
     zip: "[CEP A CONFIRMAR]",
   },
-  /**
-   * NENHUM telefone foi informado para o Vasconcelos. Nunca reutilizar o número do cliente anterior:
-   * seria um número real de outra pessoa. `display` aparece como placeholder visível; `e164`/`wa` usam
-   * um número claramente inválido (evita rota real por engano) até o escritório confirmar o número.
-   */
+  /** Telefone/WhatsApp confirmado pelo usuário em 2026-09-22. */
   phone: {
-    display: "[TELEFONE A CONFIRMAR]",
-    e164: "+554400000000",
-    wa: "554400000000",
+    display: "(44) 99154-1714",
+    e164: "+5544991541714",
+    wa: "5544991541714",
   },
   links: {
     /** Não há Facebook/Instagram confirmado: link vazio esconde a linha correspondente na UI. */
@@ -51,7 +47,7 @@ export const SITE = {
     socialProof: true,
     /** Seção de artigos ("Perspectivas sobre o Direito"): sem textos ainda. */
     articles: false,
-    /** Sem número de WhatsApp confirmado ainda, mas o fluxo fica pronto (ver `phone` acima). */
+    /** Número confirmado como WhatsApp pelo usuário (ver `phone` acima). */
     whatsapp: true,
     /** Aviso "conceito em desenvolvimento" no rodapé. Remover ao publicar de verdade. */
     conceptNotice: true,
