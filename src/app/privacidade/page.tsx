@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Wordmark } from "@/components/brand";
-import { PRIVACY, pendingClass } from "@/lib/content";
+import { PRIVACY } from "@/lib/content";
 import { SITE } from "@/lib/site";
 import { TEL_URL } from "@/lib/contact";
 
@@ -76,10 +76,7 @@ export default function Privacidade() {
                 </a>
                 .
               </p>
-              <p>
-                Para assuntos de privacidade e dados pessoais:{" "}
-                <span className={pendingClass(PRIVACY.email)}>{PRIVACY.email}</span>. Enquanto isso, use o telefone ou o WhatsApp acima.
-              </p>
+              <p>Para qualquer assunto sobre privacidade e dados pessoais, fale conosco pelo telefone ou pelo WhatsApp acima.</p>
             </Section>
 
             <Section id="cookies" title="Cookies e tecnologias semelhantes">

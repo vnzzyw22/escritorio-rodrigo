@@ -222,10 +222,9 @@ export const CONTACT = {
   privacy: "Não envie documentos nem informações sigilosas por este formulário.",
 } as const;
 
-/** Política de privacidade (/privacidade). O e-mail para assuntos de dados ainda não existe: só o advogado pode definir. */
+/** Política de privacidade (/privacidade). */
 export const PRIVACY = {
   updated: "21 de setembro de 2026",
-  email: pending("E-MAIL PARA ASSUNTOS DE PRIVACIDADE"),
 } as const;
 
 export const FOOTER = {
