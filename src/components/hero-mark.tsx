@@ -1,7 +1,12 @@
 import type { CSSProperties } from "react";
 
 /**
- * Símbolo oficial (círculo, R e louro) desenhado a traço e depois preenchido.
+ * NÃO USADO desde a adaptação para Vasconcelos (2026-09-22): este é o símbolo real do cliente anterior
+ * (Rodrigo Alan Dias — círculo, R e louro), então não pode representar outro escritório. `hero.tsx` usa
+ * `<Wordmark />` no lugar. Arquivo mantido só como referência técnica (a vetorização a-traço-e-preenchimento
+ * pode servir de método se um dia houver logo real do Vasconcelos); não importar em componentes novos.
+ *
+ * Símbolo oficial (círculo, R e louro) do cliente anterior, desenhado a traço e depois preenchido.
  *
  * Os caminhos vêm da vetorização do símbolo oficial (`assets-originais/logo/logo-oficial-original.jpeg`,
  * recorte de 471×481 px): contornos ajustados a curvas de Bézier com tolerância de 0,32 px, sem

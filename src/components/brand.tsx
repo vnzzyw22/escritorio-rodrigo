@@ -31,8 +31,8 @@ export async function Wordmark({ className = "", height = 44 }: { className?: st
 }
 
 /**
- * Símbolo R como elemento de direção de arte (grande e quase invisível).
- * Sem o arquivo do símbolo, usa um "R" tipográfico PROVISÓRIO (sem círculo nem louro).
+ * Símbolo como elemento de direção de arte (grande e quase invisível): a inicial de `SITE.person`.
+ * Sem o arquivo do símbolo, usa essa letra tipográfica PROVISÓRIA (sem círculo, louro ou marca real).
  */
 export async function RMark({
   size,
@@ -68,7 +68,7 @@ export async function RMark({
       className={`${base} font-display leading-none ${onDark ? "text-paper" : "text-ink"}`}
       style={{ fontSize: size, lineHeight: 0.8 }}
     >
-      R
+      {SITE.person.charAt(0).toUpperCase()}
     </span>
   );
 }

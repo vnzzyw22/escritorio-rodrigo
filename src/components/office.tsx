@@ -3,7 +3,7 @@ import { SITE } from "@/lib/site";
 import { Frame, Line, Reveal } from "./motion";
 import { TextLink } from "./ui";
 
-const TITLE = ["Experiência", "construída", "ao longo", "do tempo."];
+const TITLE = ["Estratégia", "jurídica,", "com clareza."];
 
 /**
  * O escritório. Foto grande sangrando pela direita; texto em coluna estreita; uma segunda foto

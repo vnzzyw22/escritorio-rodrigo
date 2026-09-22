@@ -3,7 +3,7 @@ import type { CSSProperties } from "react";
 import { HERO } from "@/lib/content";
 import { getMedia } from "@/lib/media.server";
 import { SITE } from "@/lib/site";
-import { HeroMark } from "./hero-mark";
+import { Wordmark } from "./brand";
 import { HeroVideo } from "./hero-video";
 import { ButtonLink, TextLink } from "./ui";
 
@@ -66,12 +66,14 @@ export async function Hero() {
       </div>
 
       {/*
-        Assinatura: símbolo oficial, pequeno, sem moldura, desenhado a traço e depois preenchido
-        (hero-mark.tsx). O contêiner (.hero-mark) é movido pela rolagem; o desenho é do próprio SVG.
+        Assinatura: o lockup tipográfico (Wordmark), pequeno, discreto, sem moldura — não há logo real do
+        Vasconcelos ainda (ver brand.tsx). O contêiner (.hero-mark) é movido/esmaecido pela rolagem.
         Celular: no fluxo, acima do título, sobre ink (fora do vídeo).
       */}
       <div className="hero-mark page-x pointer-events-none relative pt-6 md:absolute md:inset-x-0 md:top-[calc(var(--nav-h)+clamp(24px,5.5vh,60px))] md:pt-0">
-        <HeroMark className="w-[clamp(72px,20vw,88px)] md:w-[clamp(96px,8vw,128px)]" />
+        <div className="fade-in" style={delay(0.5)}>
+          <Wordmark />
+        </div>
       </div>
 
 
